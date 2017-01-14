@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: 莫粒的维多空间
+title: 莫粒的多维空间
 email: molisoft@qq.com
 description: > # this means to ignore newlines until "baseurl:"
   你看到的这些，它好像值得写一下。
@@ -24,9 +24,14 @@ github_username:  molisoft
 
 # Build settings
 markdown: kramdown
-theme: minima
+# theme: minima
 gems:
   - jekyll-feed
 exclude:
   - Gemfile
   - Gemfile.lock
+
+layouts_dir:  _layouts
+
+paginate: 20
+paginate_path: "posts/:num"
