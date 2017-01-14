@@ -40,3 +40,5 @@ disqus:
   shortname: "huoxr-com"
 
 comments: true
+
+future: true

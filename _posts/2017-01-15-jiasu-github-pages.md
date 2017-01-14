@@ -11,7 +11,7 @@ tags:
     - 加速
     - 锐壳云
 categories:
-    - github pages
+    - github
 permalink: /archives/jiasu-github-pages.html
 ---
 
@@ -29,7 +29,7 @@ github 已经被间接性骚扰了，国内访问不怎么稳定。
 
 所以为了情怀，我还是想想别的办法把！
 
-于是又要被我提到 [*锐壳云*](https://www.rkecloud.com) 了！
+于是又要被我提到 [锐壳云](https://www.rkecloud.com) 了！
 
 这里提供一个“网站加速” 功能，非常好用！已经稳定提供2年左右的cdn服务了。
 
