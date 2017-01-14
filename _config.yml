@@ -35,3 +35,8 @@ layouts_dir:  _layouts
 
 paginate: 20
 paginate_path: "posts/:num"
+
+disqus:
+  shortname: "huoxr-com"
+
+comments: true
