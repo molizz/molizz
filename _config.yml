@@ -13,7 +13,7 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: 莫粒的多维空间
+title: 莫粒
 email: molisoft@qq.com
 description: > # this means to ignore newlines until "baseurl:"
   你看到的这些，它好像值得写一下。
@@ -22,6 +22,13 @@ url: "http://huoxr.com" # the base hostname & protocol for your site, e.g. http:
 twitter_username: moli520
 github_username:  molisoft
 
+tagline: '的多维空间'
+author:
+  name: 莫粒
+  url:  https://twitter.com/moli520
+  email: molisoft@qq.com
+
+  
 # Build settings
 markdown: kramdown
 # theme: minima
