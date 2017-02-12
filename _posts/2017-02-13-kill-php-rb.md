@@ -5,12 +5,10 @@ published: true
 author: moli
 comments: true
 tags:
-    - API
-    - 彩票
-    - 福利彩票
+    - ruby
+    - 杀php进程
 categories:
-    - other
-permalink: /archives/2739.html
+    - ruby
 ---
 ## 写了一个自动杀php进程的ruby脚本
 
