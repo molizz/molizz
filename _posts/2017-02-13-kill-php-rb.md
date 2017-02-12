@@ -5,12 +5,12 @@ published: true
 author: moli
 comments: true
 tags:
-    - ruby
-    - 杀php进程
+  - ruby
+  - 杀php进程
 categories:
-    - ruby
+  - ruby
 ---
-## 写了一个自动杀php进程的ruby脚本
+## ruby写运维脚本也是可以的~
 
 因为发现后台老是有好多闲置的php进程没有退出，光吃资源，没干活~
 
