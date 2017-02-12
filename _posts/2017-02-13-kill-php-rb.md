@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 ---
 ## 写了一个自动杀php进程的ruby脚本
 
