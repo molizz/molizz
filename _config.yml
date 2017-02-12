@@ -38,7 +38,7 @@ exclude:
   - Gemfile
   - Gemfile.lock
 
-layouts_dir:  _layouts
+layouts_dir:  "_layouts"
 
 paginate: 20
 paginate_path: "posts/:num"

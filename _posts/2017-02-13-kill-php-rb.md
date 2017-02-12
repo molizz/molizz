@@ -1,5 +1,16 @@
 ---
+layout: post
+title: 写了一个自动杀php进程的ruby脚本
 published: true
+author: moli
+comments: true
+tags:
+    - API
+    - 彩票
+    - 福利彩票
+categories:
+    - other
+permalink: /archives/2739.html
 ---
 ## 写了一个自动杀php进程的ruby脚本
 
