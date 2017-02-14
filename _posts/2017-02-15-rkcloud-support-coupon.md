@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 title: 网站加速支持优惠码了
 tags:
   - 锐壳云 - 网站加速 - 优惠码
