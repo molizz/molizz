@@ -24,15 +24,18 @@ require 'time'
 
 def php_processes
     ps = `ps aux|grep -e '/opt/cpanel/ea-php'`
-    process = Struct.new(:pid, :created_at, :status) do 
+    process = Struct.new(:pid, :created_at, :status) do
         def kill()
             `kill -6 #{pid}`
         end
         def dormanted?
-            status == 'S'
+            %w(X S Z).include? status
+        end
+        def timeout?
+            (Time.now-created_at).to_i > (5*60)  # 大于5分钟则关闭进程
         end
         def kill_dormanted?
-            kill() if dormanted?
+            kill() if dormanted? && timeout?
         end
     end
 
@@ -40,7 +43,7 @@ def php_processes
     ps.split("\n").each do |p|
         p = p.split
         pid = p[1]
-        created_at = Time.parse "#{p[8]} #{p[9]}" rescue p[9]
+        created_at = Time.parse "#{p[8]}" rescue Time.now
         status = p[7]
         pss << process.new(pid, created_at, status)
     end
@@ -50,6 +53,7 @@ end
 php_processes.each do |p|
     p.kill_dormanted?
 end
+
 ```
 
 > 虽然很多拿python写运维代码，但是我觉得还是ruby顺手啊~~~
