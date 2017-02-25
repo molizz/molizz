@@ -34,7 +34,7 @@ def php_processes
         def timeout?
             (Time.now-created_at).to_i > (5*60)  # 大于5分钟则关闭进程
         end
-        def kill_dormanted?
+        def kill_dormanted!
             kill() if dormanted? && timeout?
         end
     end
@@ -51,7 +51,7 @@ def php_processes
 end
 
 php_processes.each do |p|
-    p.kill_dormanted?
+    p.kill_dormanted!
 end
 
 ```
