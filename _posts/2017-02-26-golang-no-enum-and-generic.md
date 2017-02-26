@@ -5,6 +5,7 @@ tags:
 title: golang没有枚举类型与泛型的尴尬
 catalogues:
   - golang
+date: 2017-02-26T23:32:00.000Z
 ---
 小莫最近一直用golang作为主要是静态语言。
 
