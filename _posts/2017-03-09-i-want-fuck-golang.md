@@ -1,5 +1,5 @@
 ---
-published: false
+published: true
 ---
 作为一名ruby开发者，后端开发，有一点对web后端开发燥了，想换个“环境”。
 
@@ -24,4 +24,4 @@ golang是一门很不错的语言~
 其实关注golang很久了，正儿八经的项目就是 rkproxy这个项目了。
 
 
-有木有深圳搞golang的呀~ 
+有木有深圳搞golang的呀~
