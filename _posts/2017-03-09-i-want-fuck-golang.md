@@ -1,5 +1,6 @@
 ---
 published: true
+title: 想转
 ---
 作为一名ruby开发者，后端开发，有一点对web后端开发燥了，想换个“环境”。
 
