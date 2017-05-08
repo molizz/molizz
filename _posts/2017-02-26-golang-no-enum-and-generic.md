@@ -52,20 +52,6 @@ f := Fuck{a: a.b}
 
 多好啊= =！ golang就应该要有枚举类型啊。
 
-好在golang可以这样玩：
-```golang
-type AType int
-
-const (
-	TypeA AType = itoa
-    TypaB
-)
-
-type Fuck  struct {
-	a AType
-}
-
-```
 
 
 ### 再说泛型
