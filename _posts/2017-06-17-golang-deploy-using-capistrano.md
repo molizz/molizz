@@ -22,7 +22,7 @@ cap（简称）是rails程序员们非常中意的自动化部署工具。
 
 首先当然是在golang项目下执行 `cap install` 来初始化
 
-因为cap会将git仓库上传到远程服务器，其实golang是必须要的，golang需要的是将二进制文件丢到服务器上去。
+因为cap会将git仓库上传到远程服务器，其实golang是没必要的，golang需要的是将二进制文件丢到服务器上去。
 
 但是目前没找到如何屏蔽git在远程拉取代码……先不管这个了，上传到远程服务器，也无公害。
 
@@ -70,8 +70,20 @@ namespace :rkproxy do
     task :download do
         # 编译、本地上传、远程下载
         Dir.chdir(Dir.pwd) do
-            `go build -o bin/rkproxy -ldflags "-s -w"`
-            `curl -T bin/rkproxy http://v0.api.upyun.com/xxxx/xxxx -u xxxx:xxxx -v`
+            # 如果二进制文件的时间戳小于5分钟，则不进行编译
+            filepath = "./bin/rkproxy"
+            need_update = true
+            if File.exist?(filepath)
+                need_update = false
+                if (File.atime(filepath) + (60*5) ) < Time.now
+                    need_update = true
+                end
+            end
+
+            if need_update
+                `go build -o bin/rkproxy -ldflags "-s -w"`
+                `curl -T bin/rkproxy http://v0.api.upyun.com/xxx/xxx -u xxx:xxx -v`
+            end
         end
         on roles(:app) do
             execute "wget #{fetch(:download_url)} -O #{fetch(:bin_path)}"
@@ -132,3 +144,5 @@ end
 上面就是主要的一些脚本，当然，因为还没有其他的需求，目前只有这些功能啦。
 
 之后应该还会加入进程监控啥。
+
+因为考虑到机器会比较多的原因，所以这里rkproxy:download任务中，会编译二进制文件到bin目录下，然后上传到upyun，然后控制远程服务器从upyun下载二进制文件。
