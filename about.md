@@ -6,7 +6,7 @@ permalink: /about/
 
 莫粒的个人博客。
 
-曾经使用WordPress，现在改成Github Pages，并使用[锐壳](https://www.rkecloud.com)的网站加速进行加速，便于各位访问。
+曾经使用WordPress，现在改成Github Pages，并使用[比特熊](https://bitbear.net)的网站加速进行加速，便于各位访问。
 
 
 ```
