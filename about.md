@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About 莫粒
+title: 关于
 permalink: /about/
 ---
 

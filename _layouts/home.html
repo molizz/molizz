@@ -3,19 +3,15 @@ layout: default
 ---
 
 <div class="home">
-
-  <h1 class="page-heading">文章</h1>
-  
   {{ content }}
 
   <ul class="post-list">
     {% for post in paginator.posts %}
       <li>
-        <span class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</span>
-
-        <h2>
+        <h4>
           <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-        </h2>
+          <span class="post-meta">{{ post.date | date: "%Y-%m-%d" }}</span>
+        </h4>
       </li>
     {% endfor %}
   </ul>

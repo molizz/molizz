@@ -16,6 +16,18 @@
             <a href="{{ site.baseurl }}/" title="Home">{{ site.title }}</a>
             <small>{{ site.tagline }}</small>
           </h3>
+          <hr style="margin: 7px 0px; border: 1px solid #545050;">
+          {% assign pages_list = site.pages | sort:"url" %}
+          {% for node in pages_list %}
+            {% if node.title != null %}
+              {% if node.layout == "page" %}
+                <a class="subtitle {% if page.url == node.url %} active{% endif %}" href="{{ node.url }}">{{ node.title }}</a> | 
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+          <a class="subtitle" href="https://github.com/molisoft">GitHub</a> | 
+          <a class="subtitle" href="https://twitter.com/moli520">Twitter</a>
+
         </div>
       </div>
 
