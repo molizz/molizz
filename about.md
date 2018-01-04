@@ -32,3 +32,14 @@ Ruby，Golang开发者。
 ```
 
 联系Email： moliliang@gmail.com
+
+## 开发运营的玩意儿
+
+- [比特熊](https://bitbear.net) - 各种轻服务
+- [FileBike](https://file.bike) - 分享文件
+- [代理工具](https://github.com/molisoft/bitproxy) - HTTP/FTP/TCP/SS 等代理工具集合
+- [磁力爬虫](https://github.com/molisoft/litebt) - 磁力爬虫，搜索的微服务（开发中）
+
+## 曾经开发的玩意
+
+删除了，以前写的都是些神马鬼玩意...
