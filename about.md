@@ -35,10 +35,11 @@ Ruby，Golang开发者。
 
 ## 开发运营的玩意儿
 
+- [V2极客](https://v2geek.com) - 销售你的软件及电子书(开发中)
 - [比特熊](https://bitbear.net) - 各种轻服务
 - [FileBike](https://file.bike) - 分享文件
 - [代理工具](https://github.com/molisoft/bitproxy) - HTTP/FTP/TCP/SS 等代理工具集合
-- [磁力爬虫](https://github.com/molisoft/litebt) - 磁力爬虫，搜索的微服务（开发中）
+- [磁力爬虫](https://github.com/molisoft/litebt) - 磁力爬虫，搜索的微服务（放弃开发）
 
 ## 曾经开发的玩意
 
