@@ -31,7 +31,7 @@ Ruby，Golang开发者。
 希望世界和平~~~
 ```
 
-联系Email： moliliang@gmail.com
+联系Email： molisoft#qq.com (moliliang#gmail.com GMAIL好像收不到国内的邮件了)
 
 ## 开发运营的玩意儿
 
