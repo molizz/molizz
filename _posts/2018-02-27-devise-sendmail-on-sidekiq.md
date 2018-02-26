@@ -51,7 +51,7 @@ end
 
 下面是队列的方法
 
-```
+```ruby
 class DeviseMailJob < ApplicationJob
   queue_as :default
 
@@ -63,7 +63,7 @@ end
 
 下面是我们继承 Devise::Mailer 后的类
 
-```
+```ruby
 class DeviseMailer < Devise::Mailer
   default from: "xxx"
   default reply_to: 'xxx'
