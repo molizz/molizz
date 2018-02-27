@@ -39,7 +39,7 @@ config.mailer = 'AsyncDeviseMailer'
 class AsyncDeviseMailer
   %w(confirmation_instructions reset_password_instructions unlock_instructions email_changed password_change).each do |method|
     class_eval <<-RUBY, __FILE__, __LINE__+1
-      def #{method}(record, token, opts={})
+      def self.#{method}(record, token, opts={})
         DeviseMailJob.perform_later("#{method}", record, token, opts={})
       end
     RUBY
@@ -56,7 +56,11 @@ class DeviseMailJob < ApplicationJob
   queue_as :default
 
   def perform(method, record, token, opts={})
-    DeviseMailer.new.send(method, record, token, opts)
+    DeviseMailer.new.send(method, record, token, opts).deliver
+  end
+  
+  # devise会调用的方法
+  def deliver
   end
 end
 ```
