@@ -1,5 +1,5 @@
 ---
-title: rails的邮件目录规划统一
+title: rails的邮件目录规划统一
 author: moli
 published: true
 comments: true
