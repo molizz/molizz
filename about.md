@@ -35,7 +35,7 @@ Ruby，Golang开发者。
 
 ## 开发运营的玩意儿
 
-- [V2极客](https://v2geek.com) - 销售你的软件及电子书(开发中)
+- [V2极客](https://v2geek.com) - 销售你的软件及电子书
 - [比特熊](https://bitbear.net) - 各种轻服务
 - [FileBike](https://file.bike) - 分享文件
 - [代理工具](https://github.com/molisoft/bitproxy) - HTTP/FTP/TCP/SS 等代理工具集合
