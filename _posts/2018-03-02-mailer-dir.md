@@ -3,7 +3,7 @@ title: rails的邮件目录规划统一
 author: moli
 published: true
 comments: true
-date: 2018-02-27 00:35:01
+date: 2018-03-02 23:21:01
 tags: [rails, mailer]
 categories:
  - rails
