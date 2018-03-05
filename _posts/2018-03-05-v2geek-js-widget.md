@@ -1,5 +1,5 @@
 ---
-title: v2geek产品JS挂件支持
+title: v2geek的产品提供JS挂件支持了
 author: moli
 published: true
 comments: true
@@ -17,4 +17,5 @@ categories:
 
 来，试试付款看看~~ ^O^ 
 
+<div id="v2geek-project-widget"></div> 
 <script src="https://v2geek.com/moli/ruby-papa/widget.js"></script>
