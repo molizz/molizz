@@ -49,3 +49,15 @@ for {
 ```
 
 完毕。
+
+================
+
+上面的不是很合理，后来发现tls.Config中有一个 GetCertificate 回调方法。。。完美解决。。。
+
+```golang
+tlsCfg := &tls.Config{
+    GetCertificate: func(info *tls.ClientHelloInfo) (cert *tls.Certificate, err error) {
+
+    },
+}
+```
