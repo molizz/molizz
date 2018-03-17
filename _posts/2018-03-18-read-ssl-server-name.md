@@ -41,10 +41,9 @@ for {
     if err != nil {
         continue
     }
-    conn = tls.Server(conn, &tls.Config{})  // 初始化一个tls net.Conn
-    tlsconn := conn.(*tls.Conn)             // net.Conn是一个接口，断言 *tls.Conn
-    tlsconn.Handshake()                     // 读取tls的握手（Client Hello）
-    state := tlsconn.ConnectionState()      // 完成 ConnectionState returns basic TLS details about the connection.
+    tlsconn = tls.Server(conn, &tls.Config{})   // 初始化一个tls *tls.Conn
+    tlsconn.Handshake()                         // 读取tls的握手（Client Hello）
+    state := tlsconn.ConnectionState()          // 完成 ConnectionState returns basic TLS details about the connection.
     this.log.Info("server name ", state.ServerName)  // Client hello中的扩展字段会带上server name，这里会输出host
 }
 ```
