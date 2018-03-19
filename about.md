@@ -4,10 +4,13 @@ title: 关于
 permalink: /about/
 ---
 
-莫粒的个人博客。
+## 关于 莫粒
+
+很久以前，觉得黑客很酷，励志做一名牛逼的黑客，后来开始学编程……那年15岁……岁月真是一把杀猪刀……
+
+后来写过windows共享软件/用PHP写过网站/给Android写过APP……现在工作主要用ruby，golang。
 
 曾经使用WordPress，现在改成Github Pages，并使用[比特熊](https://bitbear.net)的网站加速进行加速，便于访问。
-
 
 ```
 Ruby，Golang开发者。
