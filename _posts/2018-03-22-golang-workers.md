@@ -188,7 +188,7 @@ for {
 
 // 取出队列
 for i=0; i<maxPool; i++ {
-    go func(job Job) {
+    go func() {
         for {
             select {
                 case job := <- workerPool:
