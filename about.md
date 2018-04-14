@@ -15,7 +15,7 @@ permalink: /about/
 ```
 Ruby，Golang开发者。
 
-电子产品爱好者。
+电子产品爱好者; 巴塞罗那球迷。
 ```
 
 联系Email： molisoft#qq.com (moliliang#gmail.com GMAIL好像收不到国内的邮件了)
