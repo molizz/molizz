@@ -77,6 +77,7 @@ func worker() {
 			if err != nil {
 				log.Println("read broadcast error ", err.Error())
 				Done()
+				return
 			}
 			ToDatabase(msg)
 		}
