@@ -18,7 +18,7 @@ categories:
 
 因为刚好觉得bing的翻译功能非常好用. 但是bing的翻译并没有接口,域名用读html的方式解析翻译结果.
 
-做了一个telegram的机器人: @bingdict_bot
+做了一个telegram的机器人: [@bingdict_bot](https://t.me/bingdict_bot)
 
 可以在telegram搜索体验一下~~~~
 
@@ -29,7 +29,7 @@ bing词典的解析是基于我之前写的另外一个开源项目[https://gith
 
 telegram是被qiang了的. 所以为了让telegram一直保持在线,可以使用第三方的代理机器人申请代理. 
 
-通过测试,发现一个提供这个代理的机器人(@getshadow_bot), 综合跟俄罗斯的几个代理机器人比起来, 速度快一些.
+通过测试,发现一个提供这个代理的机器人[@getshadow_bot](https://t.me/getshadow_bot), 综合跟俄罗斯的几个代理机器人比起来, 速度快一些.
 
 尤其是tg官方的MTProxy代理协议非常不错, 速度很快. 
 
