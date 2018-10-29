@@ -14,7 +14,7 @@ categories:
 
 ## bing翻译机器人
 
-最近万telegram, 发现bot这个玩意挺好玩的.
+最近用telegram, 发现bot这个玩意挺好玩的.
 
 因为刚好觉得bing的翻译功能非常好用. 但是bing的翻译并没有接口,域名用读html的方式解析翻译结果.
 
