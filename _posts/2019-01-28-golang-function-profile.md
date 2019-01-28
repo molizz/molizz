@@ -37,20 +37,14 @@ categories:
 
 golang中的底层readProfile函数:
 
-<ones-code class="ones-code-card" data-viewer="16">
-
-<div data-reactroot="" class="richtext-code-viewer">
-
+```golang
     // readProfile, provided by the runtime, returns the next chunk of
     // binary CPU profiling stack trace data, blocking until data is available.
     // If profiling is turned off and all the profile data accumulated while it was
     // on has been returned, readProfile returns eof=true.
     // The caller must save the returned data and tags before calling readProfile again.
     func readProfile() (data []uint64, tags []unsafe.Pointer, eof bool)
-
-</div>
-
-</ones-code>
+```
 
 目测不会对主城造成负担.
 
