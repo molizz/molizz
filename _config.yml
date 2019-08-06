@@ -39,7 +39,7 @@ navigation:
   - name: 标签
     url: /tags
 
-footer-text: ©️ 2019 莫粒 加速服务来自<a>比特熊</a>
+footer-text: ©️ 2019 莫粒 加速服务来自<a href="https://bitbear.net" target="_blank">比特熊</a>
 
 # Build settings
 markdown: kramdown
