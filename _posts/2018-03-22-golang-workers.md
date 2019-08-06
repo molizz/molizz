@@ -4,28 +4,28 @@ author: moli
 published: true
 comments: true
 date: 2018-03-22 23:44:00
-tags: [golang 高并发]
+tags: [golang, 高并发]
 categories:
- - golang
+  - golang
 ---
 
-golang的主要场景之一就是用来做高并发的处理，之前的公司有个golang写的服务用来生成二维码，并上传到upyun上。
+golang 的主要场景之一就是用来做高并发的处理，之前的公司有个 golang 写的服务用来生成二维码，并上传到 upyun 上。
 
 并发很好，设计良好，当时还看了下源码，然后今天继续看了一下相关的文章。
 
 然后找到这篇译文：
 
-【译文】通过Go来处理每分钟达百万的数据请求 https://blog.csdn.net/tybaoerge/article/details/50392386 
+【译文】通过 Go 来处理每分钟达百万的数据请求 https://blog.csdn.net/tybaoerge/article/details/50392386
 
-这篇文章非常好的描述了什么是高并发，怎么实现高并发：在有限的资源下，通过合理的使用goroutine，channel，来完成业务操作。
+这篇文章非常好的描述了什么是高并发，怎么实现高并发：在有限的资源下，通过合理的使用 goroutine，channel，来完成业务操作。
 
-只要是2部分，调度器（dispatcher），执行者（worker）
+只要是 2 部分，调度器（dispatcher），执行者（worker）
 
 源码分析
 
 ### 调度器 dispatcher
 
-调度器的作用是从JobQueue中获取新的job，并将job交给闲置的worker。
+调度器的作用是从 JobQueue 中获取新的 job，并将 job 交给闲置的 worker。
 
 ```go
 package worker
@@ -79,7 +79,7 @@ func (d *Dispatcher) dispatch() {
 }
 ```
 
-### 工人执行者 Worker 
+### 工人执行者 Worker
 
 ```go
 package worker
@@ -148,7 +148,6 @@ func (w Worker) Stop() {
 
 ```
 
-
 感觉整个代码最抽象的其实是
 
 ```go
@@ -160,9 +159,9 @@ chan chan Job
 用图来模拟就是这样一种感觉
 
 ```
-WorkerPool chan 
+WorkerPool chan
 ----------------------------
-  ------------  
+  ------------
   | chan Job |
   ------------
   ------------
@@ -177,6 +176,7 @@ WorkerPool chan
 我想着，这样写似乎跟下面的代码没有太大区别啊：
 
 伪代码：
+
 ```go
 maxPool = 100
 workerPool = make(chan Job, maxPool)

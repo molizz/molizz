@@ -4,23 +4,25 @@ author: moli
 published: true
 comments: true
 date: 2018-07-05 01:35:01
-tags: [gitlab docker]
+tags: [gitlab, docker]
 categories:
- - docker
+  - docker
 ---
 
-在docker上安装gitlab简直太简单了~~ 想想之前手动安装各种依赖的过往，是伤心往事。
+在 docker 上安装 gitlab 简直太简单了~~ 想想之前手动安装各种依赖的过往，是伤心往事。
 
 简单几步，开心愉悦
 
-1、安装docker
+1、安装 docker
 
 2、
+
 ```
 docker pull gitlab/gitlab-ce:latest
 ```
 
 3、
+
 ```
 sudo docker run --detach \
     --hostname gitlab.example.com \

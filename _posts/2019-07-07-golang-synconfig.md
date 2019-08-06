@@ -4,20 +4,20 @@ author: moli
 published: true
 comments: true
 date: 2019-07-07 22:56:00
-tags: [golang synconfig]
+tags: [golang, synconfig]
 categories:
- - golang
+  - golang
 ---
 
 开源地址：[https://github.com/molizz/synconfig](https://github.com/molizz/synconfig)
 
 ### Synconfig 是什么
 
-这个工具是基于boltDB开发的基于http协议的 配置同步工具。
+这个工具是基于 boltDB 开发的基于 http 协议的 配置同步工具。
 
 这个的初衷是之前写一个你懂得工具，然后在分布在各地服务器，如果每次增加个新的服务器，那么就要重新同步配置，总之非常容易出错，是一个非常不可靠的设计。
 
-于是就想整一个“配置中心”的功能，最开始想用etcd，但是好像有点复杂了，所以感觉自己写了一个 服务端和客户端。
+于是就想整一个“配置中心”的功能，最开始想用 etcd，但是好像有点复杂了，所以感觉自己写了一个 服务端和客户端。
 
 第三方的软件，直接集成客户端的功能，就实现配置的同步了。
 
@@ -29,12 +29,11 @@ categories:
 
 ### 基本实现
 
-“配置中心” 服务端需要运行在某个服务器的。我是在vultr上购买了一个最低配的服务器，每个月3.5刀，还可以，上面还跑了一些其他的服务。
+“配置中心” 服务端需要运行在某个服务器的。我是在 vultr 上购买了一个最低配的服务器，每个月 3.5 刀，还可以，上面还跑了一些其他的服务。
 
-“客户端” 配置好服务器端后，就会隔几秒通过自己的stamp来获取新的配置，从而更新自身的配置。
+“客户端” 配置好服务器端后，就会隔几秒通过自己的 stamp 来获取新的配置，从而更新自身的配置。
 
-通讯上使用token来校验，并且可以配置https来通讯，避免token外泄，也建议使用https来与服务端通讯，避免token被检测到。
-
+通讯上使用 token 来校验，并且可以配置 https 来通讯，避免 token 外泄，也建议使用 https 来与服务端通讯，避免 token 被检测到。
 
 ### 其他
 
@@ -42,4 +41,4 @@ categories:
 
 我设想的一些很多功能，都会集成这个服务端。
 
-奶一波我的一个网站：[https://v2geek.com](https://v2geek.com)  ，欢迎大家来贩卖自己的软件。
+奶一波我的一个网站：[https://v2geek.com](https://v2geek.com) ，欢迎大家来贩卖自己的软件。

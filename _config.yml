@@ -13,25 +13,47 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: 莫粒
+title: 莫粒的博客
+name: 莫粒
 email: molisoft@qq.com
 description: > # this means to ignore newlines until "baseurl:"
-  你看到的这些，它好像值得写一下。
+  时间洗刷着每一个人，希望大家安好
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://huoxr.com" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: moli520
-github_username:  molisoft
+url: "https://mozz.in" # the base hostname & protocol for your site, e.g. http://example.com
 
-tagline: '的多维空间'
-author:
-  name: 莫粒
-  url:  https://twitter.com/moli520
-  email: molisoft@qq.com
+avatar: https://avatars1.githubusercontent.com/u/3153675
+# 你的社交网络链接，它们会作为图标出现在你的网站页脚中，可选填写
+footer-links:
+  email: moliliang@gmail.com
+  github: molizz
+  rss: /feed.xml
+  twitter: moli520
 
-  
+footer-text: ©️ 2019 莫粒 加速服务来自<a>比特熊</a>
+
 # Build settings
 markdown: kramdown
-# theme: minima
+
+# Jekyll 3 now only supports Kramdown for Markdown
+kramdown:
+  # Use GitHub flavored markdown, including triple backtick fenced code blocks
+  input: GFM
+  # Jekyll 3 and GitHub Pages now only support rouge for syntax highlighting
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    # Use existing pygments syntax highlighting css
+    css_class: "highlight"
+
+# Set the Sass partials directory, as we're using @imports
+sass:
+  style: :compressed # You might prefer to minify using :compressed
+
+# Use the following plug-ins
+plugins:
+  - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
+  - jekyll-feed # Create an Atom feed using the official Jekyll feed gem
+  - jekyll-paginate
+
 gems:
   - jekyll-feed
 
@@ -39,14 +61,9 @@ exclude:
   - Gemfile
   - Gemfile.lock
 
-layouts_dir:  "_layouts"
+layouts_dir: "_layouts"
 
 paginate: 20
 paginate_path: "posts/:num"
 
-disqus:
-  shortname: "huoxr-com"
-
-comments: true
-
-future: true
+disqus: "huoxr-com"

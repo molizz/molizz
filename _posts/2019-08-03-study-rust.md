@@ -4,7 +4,7 @@ author: moli
 published: true
 comments: true
 date: 2019-08-03 22:10:00
-tags: [rust study]
+tags: [rust, study]
 categories:
   - rust
 ---
