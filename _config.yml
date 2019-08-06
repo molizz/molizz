@@ -29,6 +29,16 @@ footer-links:
   rss: /feed.xml
   twitter: moli520
 
+navigation:
+  - name: 首页
+    url: /
+  - name: 关于
+    url: /about
+  - name: 归档
+    url: /archive
+  - name: 标签
+    url: /tags
+
 footer-text: ©️ 2019 莫粒 加速服务来自<a>比特熊</a>
 
 # Build settings
