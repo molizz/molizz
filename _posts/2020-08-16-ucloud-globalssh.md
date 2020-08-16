@@ -11,7 +11,7 @@ categories:
 
 ### 前话
 
-本来正在想重构 growerlab 的权限功能（github.com/growerlab），考虑到未来权限的验证是一件非常麻烦的事，以及在其他微服务的功能通用性上，所以打算重新设计权限能力。
+本来正在想重构 growerlab 的权限功能 [github.com/growerlab](https://github.com/growerlab)，考虑到未来权限的验证是一件非常麻烦的事，以及在其他微服务的功能通用性上，所以打算重新设计权限能力。
 
 当然，功能是跟在 ONES 的同事讨论沟通的设计，非原创，改天推到仓库中。
 
