@@ -57,6 +57,23 @@ ONES 是一个非常棒的项目管理系统，欢迎大佬们尝试使用。
 $ git remote set-url origin git@xxxx.ipssh.net:xxx/xxx.git
 ```
 
+##### 另外一种简单方法
+
+```
+$ vim ~/.ssh/config
+```
+
+新增配置：
+
+```
+ Host github.com
+     User    git
+     Hostname 52.74.223.119.ipssh.net
+     Port    22
+```
+
+这样所有的 github.com 走 ssh 时，都会走该 hostname
+
 完成替换后就是使用新的加速地址了。
 
 #### 暴露内网替代花生壳
