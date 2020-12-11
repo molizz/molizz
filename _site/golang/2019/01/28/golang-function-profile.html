@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>
+    
+    Golang函数级别的监控 - 莫粒的博客
+    
+  </title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="
+  golang函数级别的监控主要使用pprof包中的StartCPUProfile 函数与 StopCPUProfile
+
+  本报告主要是围绕这个监控来.
+
+
+" />
+    <meta property="og:description" content="
+  golang函数级别的监控主要使用pprof包中的StartCPUProfile 函数与 StopCPUProfile
+
+  本报告主要是围绕这个监控来.
+
+
+" />
+    
+    <meta name="author" content="莫粒" />
+
+    
+    <meta property="og:title" content="Golang函数级别的监控" />
+    <meta property="twitter:title" content="Golang函数级别的监控" />
+     <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="莫粒 - 时间洗刷着每一个人，希望大家安好
+"
+    href="/feed.xml"
+  />
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  <script src="https://kit.fontawesome.com/56f7faf3f4.js"></script>
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>
+    <div class="wrapper-sidebar">
+  <header class="sidebar clearfix">
+    <div class="site-info">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars1.githubusercontent.com/u/3153675" /></a>
+       
+      <h1 class="site-name"><a href="/">莫粒</a></h1>
+      <p class="site-description">时间洗刷着每一个人，希望大家安好
+</p>
+    </div>
+  </header>
+
+  <div class="navlist">
+    <nav>
+      
+      
+      <a href="/">首页</a>
+      
+      
+      
+      <a href="/about">关于</a>
+      
+      
+      
+      <a href="/archive">归档</a>
+      
+      
+      
+      <a href="/tags">标签</a>
+      
+      
+    </nav>
+  </div>
+
+  <div class="wrapper-footer-desktop">
+    <footer class="footer">
+      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+  
+  
+
+  
+
+  
+  <li><a href="mailto:moliliang@gmail.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/molizz" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM112 416c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm157.533 0h-34.335c-6.011 0-11.051-4.636-11.442-10.634-5.214-80.05-69.243-143.92-149.123-149.123-5.997-.39-10.633-5.431-10.633-11.441v-34.335c0-6.535 5.468-11.777 11.994-11.425 110.546 5.974 198.997 94.536 204.964 204.964.352 6.526-4.89 11.994-11.425 11.994zm103.027 0h-34.334c-6.161 0-11.175-4.882-11.427-11.038-5.598-136.535-115.204-246.161-251.76-251.76C68.882 152.949 64 147.935 64 141.774V107.44c0-6.454 5.338-11.664 11.787-11.432 167.83 6.025 302.21 141.191 308.205 308.205.232 6.449-4.978 11.787-11.432 11.787z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.twitter.com/moli520" class="icon-26 twitter" title="Twitter"><svg viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg><!--[if lt IE 9]><em>Twitter</em><![endif]--></a></li>
+  
+
+  
+
+</ul>
+
+
+
+<p>©️ 2019 莫粒 加速服务来自<a href="https://bitbear.net" target="_blank">比特熊</a></p>
+
+    </footer>
+  </div>
+</div>
+
+    <div id="main" role="main" class="wrapper-content">
+      <article class="posts">
+  <h1>Golang函数级别的监控</h1>
+
+  <div clsss="meta">
+    <span class="date">
+      2019-01-28
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="https://mozz.in/tags#golang">
+          golang
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <blockquote>
+  <p>golang函数级别的监控主要使用pprof包中的<a href="https://golang.org/src/runtime/pprof/pprof.go?s=23119:23158#L730">StartCPUProfile</a> 函数与 <a href="https://golang.org/src/runtime/pprof/pprof.go?s=25047:25068#L789">StopCPUProfile</a></p>
+
+  <p>本报告主要是围绕这个监控来.</p>
+</blockquote>
+
+<h2 id="监控函数性能的目的">监控函数性能的目的</h2>
+
+<p>除了sql慢查询监控, 网络情况等监控, 我们应该也必须监控到函数的性能. 如果因为不合理的代码导致接口变慢, 内存变多等问题, 应能被监控并处理的.</p>
+
+<ul>
+  <li>提高接口响应速度</li>
+  <li>提前预知问题, 并尽早处理, 而不是等到大范围的客户感知被动响应(减少被动率, 提高主动率)</li>
+  <li>让程序员写出更好的代码</li>
+  <li>最终的目标是在性能问题被客户感知,放大之前, 将性能问题解决掉</li>
+</ul>
+
+<h3 id="pprof简单介绍">PProf简单介绍</h3>
+
+<p>进程中的性能问题主要采用StartCPUProfile &amp; StopCPUProfile函数.</p>
+
+<p>这两个函数是golang自带的性能采集函数, 用于帮助开发者检查并分析进程中的性能问题.</p>
+
+<ul>
+  <li>StartCPUProfile 开始采集运行栈, 并保存起来</li>
+  <li>StopCPUProfile 停止采集</li>
+</ul>
+
+<h3 id="生产环境中使用pprof会有什么问题">生产环境中使用PProf会有什么问题</h3>
+
+<p>那么直接在生产环境中会对主进程造成什么影响呢?</p>
+
+<p>golang中的底层readProfile函数:</p>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c">// readProfile, provided by the runtime, returns the next chunk of</span>
+    <span class="c">// binary CPU profiling stack trace data, blocking until data is available.</span>
+    <span class="c">// If profiling is turned off and all the profile data accumulated while it was</span>
+    <span class="c">// on has been returned, readProfile returns eof=true.</span>
+    <span class="c">// The caller must save the returned data and tags before calling readProfile again.</span>
+    <span class="k">func</span> <span class="n">readProfile</span><span class="p">()</span> <span class="p">(</span><span class="n">data</span> <span class="p">[]</span><span class="kt">uint64</span><span class="p">,</span> <span class="n">tags</span> <span class="p">[]</span><span class="n">unsafe</span><span class="o">.</span><span class="n">Pointer</span><span class="p">,</span> <span class="n">eof</span> <span class="kt">bool</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>目测不会对主城造成负担.</p>
+
+<h2 id="解决方案">解决方案</h2>
+
+<h3 id="分析prof数据">分析prof数据</h3>
+
+<p>刚开始接触使用StartCPUProfile的时候, 感觉是一个本地使用的工具, 并不觉得可以用在生产环境(没看源码)</p>
+
+<p>但是参考 <a href="http://github.com/stackimpact/stackimpact-go">http://github.com/stackimpact/stackimpact-go</a> 的源码后, 发现其实StartCPUProfile是可以被集成到生产环境的性能监控的.</p>
+
+<p>疑惑</p>
+
+<ul>
+  <li>如何解码StartCPUProfile产生的pprof数据</li>
+  <li>如何统计&amp;量化profile数据 </li>
+</ul>
+
+<p>顺着这个思路, 开始研究golang中的go tool pprof 相关的命令源码, 并查阅 stackimpact 源码.</p>
+
+<p>go tool pprof 的命令是基于 <a href="https://github.com/google/pprof/">https://github.com/google/pprof/</a> 实现的.</p>
+
+<ul>
+  <li>数据通过 <a href="https://developers.google.com/protocol-buffers">protocol-buffers</a> 协议存储</li>
+  <li>profile的数据结构: <a href="https://github.com/google/pprof/blob/master/proto/profile.proto">https://github.com/google/pprof/blob/master/proto/profile.proto</a></li>
+  <li>解码功能可以在 google/pprof 库里面找到.
+    <ul>
+      <li>google/pprof/profile.Parse()</li>
+    </ul>
+  </li>
+</ul>
+
+<p>查阅完上面的文档后可知道:</p>
+
+<ul>
+  <li>StartCPUProfile输出的结果是用的google/pprof保存 + GZip方式压缩过的</li>
+  <li>输出的结果(xxx.prof) 文件是可以通过gzip.Reader 解码后, 通过google/pprof中的序列化成一个结构体的</li>
+  <li>结构体中内容如下:</li>
+</ul>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">type</span> <span class="n">Profile</span> <span class="k">struct</span> <span class="p">{</span>
+    	<span class="n">SampleType</span> <span class="p">[]</span><span class="o">*</span><span class="n">ValueType</span>
+    	<span class="n">Sample</span>     <span class="p">[]</span><span class="o">*</span><span class="n">Sample</span>
+    	<span class="n">Mapping</span>    <span class="p">[]</span><span class="o">*</span><span class="n">Mapping</span>
+    	<span class="n">Location</span>   <span class="p">[]</span><span class="o">*</span><span class="n">Location</span>
+    	<span class="n">Function</span>   <span class="p">[]</span><span class="o">*</span><span class="n">Function</span>
+
+    	<span class="n">DropFrames</span> <span class="kt">string</span>
+    	<span class="n">KeepFrames</span> <span class="kt">string</span>
+
+    	<span class="n">TimeNanos</span>     <span class="kt">int64</span>
+    	<span class="n">DurationNanos</span> <span class="kt">int64</span>
+    	<span class="n">PeriodType</span>    <span class="o">*</span><span class="n">ValueType</span>
+    	<span class="n">Period</span>        <span class="kt">int64</span>
+
+    	<span class="n">dropFramesX</span> <span class="kt">int64</span>
+    	<span class="n">keepFramesX</span> <span class="kt">int64</span>
+    	<span class="n">stringTable</span> <span class="p">[]</span><span class="kt">string</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h4 id="解码pprof数据">解码PProf数据:</h4>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c">// 将监控的结果写入内存</span>
+    <span class="n">buff</span> <span class="o">:=</span> <span class="n">bytes</span><span class="o">.</span><span class="n">Buffer</span><span class="p">{}</span>
+    <span class="n">w</span> <span class="o">:=</span> <span class="n">bufio</span><span class="o">.</span><span class="n">NewWriter</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span>
+    <span class="n">pprof</span><span class="o">.</span><span class="n">StartCPUProfile</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+    <span class="k">defer</span> <span class="n">pprof</span><span class="o">.</span><span class="n">StopCPUProfile</span><span class="p">()</span>
+
+    <span class="c">// 解码数据(伪代码)</span>
+    <span class="k">import</span> <span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">google</span><span class="o">/</span><span class="n">pprof</span><span class="o">/</span><span class="n">profile</span>
+    <span class="n">encodeBuff</span> <span class="o">:=</span> <span class="n">gzip</span><span class="o">.</span><span class="n">Reader</span><span class="p">(</span><span class="n">buff</span><span class="p">)</span>
+    <span class="n">profile</span><span class="o">.</span><span class="n">Parse</span><span class="p">(</span><span class="n">encodeBuff</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>通过上面的伪代码可以了解到这个搜集pprof的结果.</p>
+
+<h4 id="结论-暂时只考虑-定时监控-的方式">结论: 暂时只考虑 “定时监控” 的方式</h4>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">func</span> <span class="n">StartCPUProfile</span><span class="p">(</span><span class="n">w</span> <span class="n">io</span><span class="o">.</span><span class="n">Writer</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+            <span class="c">// cpu锁</span>
+    	<span class="n">cpu</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+    	<span class="k">defer</span> <span class="n">cpu</span><span class="o">.</span><span class="n">Unlock</span><span class="p">()</span>
+    	<span class="k">if</span> <span class="n">cpu</span><span class="o">.</span><span class="n">done</span> <span class="o">==</span> <span class="no">nil</span> <span class="p">{</span>
+    		<span class="n">cpu</span><span class="o">.</span><span class="n">done</span> <span class="o">=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">bool</span><span class="p">)</span>
+    	<span class="p">}</span>
+    	<span class="c">// 双重锁</span>
+    	<span class="k">if</span> <span class="n">cpu</span><span class="o">.</span><span class="n">profiling</span> <span class="p">{</span>
+    		<span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"cpu profiling already in use"</span><span class="p">)</span>
+    	<span class="p">}</span>
+    	<span class="n">cpu</span><span class="o">.</span><span class="n">profiling</span> <span class="o">=</span> <span class="no">true</span>
+            <span class="c">// ...</span>
+    	<span class="k">return</span> <span class="no">nil</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="定时监控-实现">“定时监控” 实现</h3>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c">// ...</span>
+    <span class="k">func</span> <span class="p">(</span><span class="n">f</span> <span class="o">*</span><span class="n">TickerProfiler</span><span class="p">)</span> <span class="n">tickerFunc</span><span class="p">()</span> <span class="p">{</span>
+    	<span class="c">// ...</span>
+    <span class="p">}</span>
+
+    <span class="c">// 保持到队列</span>
+    <span class="k">func</span> <span class="p">(</span><span class="n">p</span> <span class="o">*</span><span class="n">ProfilesData</span><span class="p">)</span> <span class="n">AddNewProfile</span><span class="p">(</span><span class="n">newProfile</span> <span class="k">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int64</span><span class="p">)</span> <span class="p">{</span>
+    	<span class="c">// ...</span>
+    	<span class="n">p</span><span class="o">.</span><span class="n">list</span><span class="o">.</span><span class="n">Push</span><span class="p">(</span><span class="n">profile</span><span class="p">)</span>
+    <span class="p">}</span>
+
+    <span class="c">// 通过接口+时间戳获取队列中的增量数据</span>
+
+    <span class="k">func</span> <span class="n">GetProfiles</span><span class="p">(</span><span class="n">stamp</span> <span class="kt">int64</span><span class="p">)</span> <span class="p">[]</span><span class="o">*</span><span class="n">Profile</span> <span class="p">{</span>
+    	<span class="k">return</span> <span class="n">profiles</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>通过每隔一段时间执行 StartCPUProfile 进行采集并保持到队列列表中</p>
+
+<p>定时监控”优点:</p>
+
+<ul>
+  <li>对主进程影响较低</li>
+</ul>
+
+<p>缺点:</p>
+
+<ul>
+  <li>颗粒度较大, 不一定能实时命中到到较慢的函数(但理论上可以命大所有的函数)</li>
+</ul>
+
+<h3 id="中间件-实现">“中间件” 实现</h3>
+
+<p>通过router.go中加入begin/done的方式监控各个接口请求的性能</p>
+
+<div class="language-golang highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c">// 伪代码</span>
+    <span class="n">Use</span><span class="p">(</span><span class="n">StartCPUProfile</span><span class="p">)</span>
+    <span class="c">// 接口</span>
+    <span class="n">Done</span><span class="p">(</span><span class="n">StopCPUProfile</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>优点:</p>
+
+<ul>
+  <li>颗粒度够细</li>
+</ul>
+
+<p>缺点</p>
+
+<ul>
+  <li>StartCPUProfile 本身是全局锁, 同时只能运行一个该函数</li>
+  <li>在并发条件下, 依然可能会导致其他接口无法被监控到.</li>
+</ul>
+
+<h3 id="如何量化监控到的数据">如何量化监控到的数据</h3>
+
+<p>采集到数据后, 可通过grafana将数据展示出来, 并提供预警等</p>
+
+<h3 id="开源库">开源库</h3>
+
+<p>根据这篇文章写一个golang的监控库:</p>
+
+<p><a href="https://github.com/molizz/funcpprof">https://github.com/molizz/funcpprof</a></p>
+
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'huoxr-com';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+<div class="pagination">
+  
+    <span class="prev" >
+      <a href="https://mozz.in/%E6%80%BB%E7%BB%93/2018/12/01/thought.html">
+        ← 上一篇
+      </a>
+    </span>
+  
+  
+    <span class="next" >
+      <a href="https://mozz.in/golang/2019/07/08/golang-synconfig.html">
+        下一篇 →
+      </a>
+    </span>
+  
+</div>
+    </div>
+
+    
+
+  </body>
+
+  <div class="wrapper-footer-mobile">
+    <footer class="footer">
+      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+  
+  
+
+  
+
+  
+  <li><a href="mailto:moliliang@gmail.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/molizz" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM112 416c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm157.533 0h-34.335c-6.011 0-11.051-4.636-11.442-10.634-5.214-80.05-69.243-143.92-149.123-149.123-5.997-.39-10.633-5.431-10.633-11.441v-34.335c0-6.535 5.468-11.777 11.994-11.425 110.546 5.974 198.997 94.536 204.964 204.964.352 6.526-4.89 11.994-11.425 11.994zm103.027 0h-34.334c-6.161 0-11.175-4.882-11.427-11.038-5.598-136.535-115.204-246.161-251.76-251.76C68.882 152.949 64 147.935 64 141.774V107.44c0-6.454 5.338-11.664 11.787-11.432 167.83 6.025 302.21 141.191 308.205 308.205.232 6.449-4.978 11.787-11.432 11.787z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.twitter.com/moli520" class="icon-26 twitter" title="Twitter"><svg viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg><!--[if lt IE 9]><em>Twitter</em><![endif]--></a></li>
+  
+
+  
+
+</ul>
+
+
+
+<p>©️ 2019 莫粒 加速服务来自<a href="https://bitbear.net" target="_blank">比特熊</a></p>
+
+    </footer>
+
+
+</html>

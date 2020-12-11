@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>
+    
+    【转】Unicode ASCII 编码转换 - 莫粒的博客
+    
+  </title>
+
+      <meta charset="utf-8" />
+    <meta content='text/html; charset=utf-8' http-equiv='Content-Type'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'>
+
+    
+    <meta name="description" content="这有两个函数!
+
+第一个是将Unicode变成ASCII
+
+第二个是将ASCII变成Unicode
+
+你可以将Unicode变成ASCII后进行操作,然后再ASCII变成Unicode保存
+
+   
+
+inline LPTSTR B2A(BSTR lp)
+
+{
+
+      int nLen=(lstrlenW(lp)+1) &lt; &gt;1-1;
+
+      BSTR str = ::SysAllocStringLen(NULL, nLen);
+
+      MultiByteToWideChar(CP_ACP, 0, lp, -1, str, nLen);
+
+      return str;
+
+}
+
+" />
+    <meta property="og:description" content="这有两个函数!
+
+第一个是将Unicode变成ASCII
+
+第二个是将ASCII变成Unicode
+
+你可以将Unicode变成ASCII后进行操作,然后再ASCII变成Unicode保存
+
+   
+
+inline LPTSTR B2A(BSTR lp)
+
+{
+
+      int nLen=(lstrlenW(lp)+1) &lt; &gt;1-1;
+
+      BSTR str = ::SysAllocStringLen(NULL, nLen);
+
+      MultiByteToWideChar(CP_ACP, 0, lp, -1, str, nLen);
+
+      return str;
+
+}
+
+" />
+    
+    <meta name="author" content="莫粒" />
+
+    
+    <meta property="og:title" content="【转】Unicode ASCII 编码转换" />
+    <meta property="twitter:title" content="【转】Unicode ASCII 编码转换" />
+     <!-- Async font loading -->
+<script>
+  window.WebFontConfig = {
+      custom: {
+          families: ['Spoqa Han Sans:100,300,400,700'],
+          urls: ['https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css']
+      },
+      timeout: 60000
+  };
+  (function(d) {
+      var wf = d.createElement('script'), s = d.scripts[0];
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js';
+      s.parentNode.insertBefore(wf, s);
+  })(document);
+</script>
+
+  <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link rel="stylesheet" type="text/css" href="/style.css" />
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="莫粒 - 时间洗刷着每一个人，希望大家安好
+"
+    href="/feed.xml"
+  />
+  <link rel="shortcut icon" href="/images/favicon.ico" />
+  <script src="https://kit.fontawesome.com/56f7faf3f4.js"></script>
+
+  <!-- Created with Jekyll Now - http://github.com/barryclark/jekyll-now -->
+</head>
+
+  <body>
+    <div class="wrapper-sidebar">
+  <header class="sidebar clearfix">
+    <div class="site-info">
+      
+        <a href="/" class="site-avatar"><img src="https://avatars1.githubusercontent.com/u/3153675" /></a>
+       
+      <h1 class="site-name"><a href="/">莫粒</a></h1>
+      <p class="site-description">时间洗刷着每一个人，希望大家安好
+</p>
+    </div>
+  </header>
+
+  <div class="navlist">
+    <nav>
+      
+      
+      <a href="/">首页</a>
+      
+      
+      
+      <a href="/about">关于</a>
+      
+      
+      
+      <a href="/archive">归档</a>
+      
+      
+      
+      <a href="/tags">标签</a>
+      
+      
+    </nav>
+  </div>
+
+  <div class="wrapper-footer-desktop">
+    <footer class="footer">
+      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+  
+  
+
+  
+
+  
+  <li><a href="mailto:moliliang@gmail.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/molizz" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM112 416c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm157.533 0h-34.335c-6.011 0-11.051-4.636-11.442-10.634-5.214-80.05-69.243-143.92-149.123-149.123-5.997-.39-10.633-5.431-10.633-11.441v-34.335c0-6.535 5.468-11.777 11.994-11.425 110.546 5.974 198.997 94.536 204.964 204.964.352 6.526-4.89 11.994-11.425 11.994zm103.027 0h-34.334c-6.161 0-11.175-4.882-11.427-11.038-5.598-136.535-115.204-246.161-251.76-251.76C68.882 152.949 64 147.935 64 141.774V107.44c0-6.454 5.338-11.664 11.787-11.432 167.83 6.025 302.21 141.191 308.205 308.205.232 6.449-4.978 11.787-11.432 11.787z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.twitter.com/moli520" class="icon-26 twitter" title="Twitter"><svg viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg><!--[if lt IE 9]><em>Twitter</em><![endif]--></a></li>
+  
+
+  
+
+</ul>
+
+
+
+<p>©️ 2019 莫粒 加速服务来自<a href="https://bitbear.net" target="_blank">比特熊</a></p>
+
+    </footer>
+  </div>
+</div>
+
+    <div id="main" role="main" class="wrapper-content">
+      <article class="posts">
+  <h1>【转】Unicode ASCII 编码转换</h1>
+
+  <div clsss="meta">
+    <span class="date">
+      2008-09-14
+    </span>
+
+    <ul class="tag">
+      
+      <li>
+        <a href="https://mozz.in/tags#Moli">
+          Moli
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://mozz.in/tags#免费">
+          免费
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://mozz.in/tags#免费空间">
+          免费空间
+        </a>
+      </li>
+      
+      <li>
+        <a href="https://mozz.in/tags#博客空间">
+          博客空间
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+
+  <div class="entry">
+    <p>这有两个函数!</p>
+
+<p>第一个是将Unicode变成ASCII</p>
+
+<p>第二个是将ASCII变成Unicode</p>
+
+<p>你可以将Unicode变成ASCII后进行操作,然后再ASCII变成Unicode保存</p>
+
+<p>   </p>
+
+<p>inline LPTSTR B2A(BSTR lp)</p>
+
+<p>{</p>
+
+<p>      int nLen=(lstrlenW(lp)+1) &lt; &gt;1-1;</p>
+
+<p>      BSTR str = ::SysAllocStringLen(NULL, nLen);</p>
+
+<p>      MultiByteToWideChar(CP_ACP, 0, lp, -1, str, nLen);</p>
+
+<p>      return str;</p>
+
+<p>}</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  仔细做好串处理 &amp;nbsp;&amp;nbsp;&amp;nbsp; 这一部分将花点时间来讨论如何在COM代码中处理串。如果你熟悉Unicode 和ANSI，并知道如何对它们进行转换的话，你就可以跳过这一部分，否则还是读一下这一部分的内容。 &amp;nbsp;&amp;nbsp;&amp;nbsp; 不管什么时候，只要COM方法返回一个串，这个串都是Unicode串（这里指的是写入COM规范的所有方法）。Unicode是一种字符编码集，类似ASCII，但用两个字节表示一个字符。如果你想更好地控制或操作串的话，应该将它转换成TCHAR类型串。 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; TCHAR和以_t开头的函数（如_tcscpy()）被设计用来让你用相同的源代码处理Unicode和ANSI串。在大多数情况下编写的代码都是用来处理ANSI串和ANSI WindowsAPIs，所以在下文中，除非另外说明，我所说的字符/串都是指TCHAR类型。你应该熟练掌握TCHAR类型，尤其是当你阅读其他人写的有关代码时，要特别注意TCHAR类型。 &amp;nbsp;&amp;nbsp;&amp;nbsp; 当你从某个COM方法返回得到一个Unicode串时，可以用下列几种方法之一将它转换成char类型串： 
+  
+  
+    1、调用 WideCharToMultiByte() API。 2、调用CRT 函数wcstombs()。 3、使用CString 构造器或赋值操作(仅用于MFC )。 4、使用ATL 串转换宏。   
+    
+    
+      
+        WideCharToMultiByte() &amp;nbsp;&amp;nbsp;&amp;nbsp; 你可以用WideCharToMultiByte()将一个Unicode串转换成一个ANSI串。此函数的原型如下：
+      
+    
+    
+    
+      
+        int WideCharToMultiByte (
+UINT    CodePage,
+DWORD   dwFlags,
+LPCWSTR lpWideCharStr,
+int     cchWideChar,
+LPSTR   lpMultiByteStr,
+int     cbMultiByte,
+LPCSTR  lpDefaultChar,
+LPBOOL  lpUsedDefaultChar );
+      
+    
+    
+    
+      
+        以下是参数解释： CodePage  Unicode字符转换成的代码页。你可以传递CP_ACP来使用当前的ANSI代码页。代码页是256个字符集。字符0&amp;mdash;&amp;mdash;127与ANSI编码一样。字符128&amp;mdash;&amp;mdash;255与ANSI字符不同，它可以包含图形字符或者读音符号。每一种语言或地区都有其自己的代码页，所以使用正确的代码页对于正确地显示重音字符很重要。 dwFlags  dwFlags 确定Windows如何处理&amp;ldquo;复合&amp;rdquo; Unicode字符，它是一种后面带读音符号的字符。如è就是一个复合字符。如果这些字符在CodePage参数指定的代码页中，不会出什么事。否则，Windows必须对之进行转换。 传递WC_COMPOSITECHECK使得这个API检查非映射复合字符。 传递WC_SEPCHARS使得Windows将字符分为两段，即字符加读音，如e`。 传递WC_DISCARDNS使得Windows丢弃读音符号。 传递WC_DEFAULTCHAR使得Windows用lpDefaultChar参数中说明的缺省字符替代复合字符。 缺省行为是WC_SEPCHARS。 lpWideCharStr  要转换的Unicode串。 cchWideChar  lpWideCharStr在Unicode 字符中的长度。通常传递-1，表示这个串是以0x00结尾。 lpMultiByteStr  接受转换的串的字符缓冲 cbMultiByte  lpMultiByteStr的字节大小。 lpDefaultChar  可选&amp;mdash;&amp;mdash;当dwFlags包含WC_COMPOSITECHECK | WC_DEFAULTCHAR并且某个Unicode字符不能被映射到同等的ANSI串时所传递的一个单字符ANSI串，包含被插入的&amp;ldquo;缺省&amp;rdquo;字符。可以传递NULL，让API使用系统缺省字符（一种写法是一个问号）。 lpUsedDefaultChar  可选&amp;mdash;&amp;mdash;指向BOOL类型的一个指针，设置它来表示是否缺省字符曾被插入ANSI串。可以传递NULL来忽略这个参数。 我自己都有点晕菜了……!，万事开头难啊……，不搞清楚这些东西就很难搞清楚COM的串处理。何况文档中列出的比实际应用的要复杂得多。下面就给出了如何使用这个API的例子：
+      
+    
+    
+    
+      
+        // 假设已经有了一个Unicode 串 wszSomeString... char szANSIString [MAX_PATH];
+
+WideCharToMultiByte ( CP_ACP,                // ANSI 代码页
+                      WC_COMPOSITECHECK, // 检查重音字符
+                      wszSomeString,         // 原Unicode 串
+                      -1,                    // -1 意思是串以0x00结尾
+                      szANSIString,          // 目的char字符串
+                      sizeof(szANSIString),  // 缓冲大小
+                      NULL,                  // 肥缺省字符串
+                      NULL );                // 忽略这个参数 调用这个函数后，szANSIString将包含Unicode串的ANSI版本。
+      
+    
+    
+    
+      
+        wcstombs() &amp;nbsp;&amp;nbsp;&amp;nbsp; 这个CRT函数wcstombs()是个简化版，但它终结了WideCharToMultiByte()的调用，所以最终结果是一样的。其原型如下：
+      
+    
+    
+    
+      
+        size_t wcstombs (
+char*          mbstr,
+const wchar_t* wcstr,
+size_t         count );
+      
+    
+    
+    
+      
+        以下是参数解释： mbstr  接受结果ANSI串的字符（char）缓冲。 wcstr  要转换的Unicode串。 count  mbstr参数所指的缓冲大小。 
+        
+        
+          wcstombs()在它对WideCharToMultiByte()的调用中使用WC_COMPOSITECHECK | WC_SEPCHARS标志。用wcstombs()转换前面例子中的Unicode串，结果一样：
+        
+        
+        
+          wcstombs ( szANSIString, wszSomeString, sizeof(szANSIString) );  
+          
+          
+            
+              CString &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; MFC中的CString包含有构造函数和接受Unicode串的赋值操作，所以你可以用CString来实现转换。例如： 
+              
+              
+                // 假设有一个Unicode串wszSomeString&amp;#8230;
+              
+              
+              
+                CString str1 ( wszSomeString ); // 用构造器转换 CString str2;
+              
+              
+              
+                str2 = wszSomeString; // 用赋值操作转换
+              
+              
+              
+                ATL宏 &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; ATL有一组很方便的宏用于串的转换。W2A()用于将Unicode串转换为ANSI串（记忆方法是&amp;ldquo;wide to ANSI&amp;rdquo;&amp;mdash;&amp;mdash;宽字符到ANSI）。实际上使用OLE2A()更精确，&amp;ldquo;OLE&amp;rdquo;表示的意思是COM串或者OLE串。下面是使用这些宏的例子：
+              
+              
+              
+                #include 
+              
+              
+              
+                // 还是假设有一个Unicode串wszSomeString&amp;#8230;
+              
+              
+              
+                { char szANSIString [MAX_PATH]; USES_CONVERSION; // 声明这个宏要使用的局部变量
+              
+              
+              
+                lstrcpy ( szANSIString, OLE2A(wszSomeString) ); }
+              
+              
+              
+                OLE2A()宏&amp;ldquo;返回&amp;rdquo;转换的串的指针，但转换的串被存储在某个临时栈变量中，所以要用lstrcpy()来获得自己的拷贝。其它的几个宏是W2T()（Unicode 到 TCHAR）以及W2CT()（Unicode到常量TCHAR串）。  有个宏是OLE2CA()（Unicode到常量char串），可以被用到上面的例子中，OLE2CA()实际上是个更正宏，因为lstrcpy()的第二个参数是一个常量char*，关于这个问题本文将在以后作详细讨论。 另一方面，如果你不想做以上复杂的串处理，尽管让它还保持为Unicode串，如果编写的是控制台应用程序，输出/显示Unicode串时应该用全程变量std::wcout，如：
+              
+              
+              
+                wcout 
+</code></pre></div></div>
+
+  </div>
+
+  
+<div class="comments">
+	<div id="disqus_thread"></div>
+	<script type="text/javascript">
+
+	    var disqus_shortname = 'huoxr-com';
+
+	    (function() {
+	        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+	        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+	        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+	    })();
+
+	</script>
+	<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+
+</article>
+
+<div class="pagination">
+  
+    <span class="prev" >
+      <a href="https://mozz.in/archives/174.html">
+        ← 上一篇
+      </a>
+    </span>
+  
+  
+    <span class="next" >
+      <a href="https://mozz.in/archives/170.html">
+        下一篇 →
+      </a>
+    </span>
+  
+</div>
+    </div>
+
+    
+
+  </body>
+
+  <div class="wrapper-footer-mobile">
+    <footer class="footer">
+      <!-- Refer to https://codepen.io/ruandre/pen/howFi -->
+<ul class="svg-icon">
+
+  
+  
+  
+
+  
+
+  
+  <li><a href="mailto:moliliang@gmail.com" class="icon-8 email" title="Email"><svg viewBox="0 0 512 512"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V400c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5 0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></svg><!--[if lt IE 9]><em>Email</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://github.com/molizz" class="icon-13 github" title="GitHub"><svg viewBox="0 0 512 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg><!--[if lt IE 9]><em>GitHub</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+
+  
+  <li><a href="/feed.xml" class="icon-21 rss" title="RSS"><svg viewBox="0 0 512 512"><path d="M400 32H48C21.49 32 0 53.49 0 80v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V80c0-26.51-21.49-48-48-48zM112 416c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm157.533 0h-34.335c-6.011 0-11.051-4.636-11.442-10.634-5.214-80.05-69.243-143.92-149.123-149.123-5.997-.39-10.633-5.431-10.633-11.441v-34.335c0-6.535 5.468-11.777 11.994-11.425 110.546 5.974 198.997 94.536 204.964 204.964.352 6.526-4.89 11.994-11.425 11.994zm103.027 0h-34.334c-6.161 0-11.175-4.882-11.427-11.038-5.598-136.535-115.204-246.161-251.76-251.76C68.882 152.949 64 147.935 64 141.774V107.44c0-6.454 5.338-11.664 11.787-11.432 167.83 6.025 302.21 141.191 308.205 308.205.232 6.449-4.978 11.787-11.432 11.787z"/></svg><!--[if lt IE 9]><em>RSS</em><![endif]--></a></li>
+  
+
+  
+
+  
+
+  
+  <li><a href="https://www.twitter.com/moli520" class="icon-26 twitter" title="Twitter"><svg viewBox="0 0 512 512"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg><!--[if lt IE 9]><em>Twitter</em><![endif]--></a></li>
+  
+
+  
+
+</ul>
+
+
+
+<p>©️ 2019 莫粒 加速服务来自<a href="https://bitbear.net" target="_blank">比特熊</a></p>
+
+    </footer>
+
+
+</html>

@@ -1,0 +1,630 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="https://mozz.in/feed.xml" rel="self" type="application/atom+xml" /><link href="https://mozz.in/" rel="alternate" type="text/html" /><updated>2020-12-12T00:50:24+08:00</updated><id>https://mozz.in/feed.xml</id><title type="html">莫粒的博客</title><subtitle>时间洗刷着每一个人，希望大家安好
+</subtitle><entry><title type="html">golang1.5之后gopls在vscode中无法启动的问题</title><link href="https://mozz.in/go/2020/11/13/gopls-withou-go-mod.html" rel="alternate" type="text/html" title="golang1.5之后gopls在vscode中无法启动的问题" /><published>2020-11-13T23:30:00+08:00</published><updated>2020-11-13T23:30:00+08:00</updated><id>https://mozz.in/go/2020/11/13/gopls-withou-go-mod</id><content type="html" xml:base="https://mozz.in/go/2020/11/13/gopls-withou-go-mod.html">&lt;h3 id=&quot;gopls-在-go15-之后的坑---简述&quot;&gt;gopls 在 go1.5 之后的坑 - 简述&lt;/h3&gt;
+
+&lt;p&gt;由于 go1.5 之后官方的 go module 是默认强制开启的。&lt;/p&gt;
+
+&lt;p&gt;所以 gopls 在一些未使用 go module 的项目中会有一些坑。&lt;/p&gt;
+
+&lt;p&gt;比如公司的老项目还用的 govendor 这个依赖管理工具，官方早就未维护了。&lt;/p&gt;
+
+&lt;p&gt;其实迁移到新的 go module 也不麻烦，但是似乎并没人来推动这个事。&lt;/p&gt;
+
+&lt;h3 id=&quot;未使用-go-module-的坑&quot;&gt;未使用 go module 的坑&lt;/h3&gt;
+
+&lt;h4 id=&quot;一gopls-无法启动提示必须使用-go-mod&quot;&gt;一、gopls 无法启动，提示必须使用 go mod&lt;/h4&gt;
+
+&lt;p&gt;解决方式：修改 vscode 的配置 settings.json 文件，新增配置&lt;/p&gt;
+
+&lt;div class=&quot;language-json highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;go.toolsEnvVars&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+    &lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;&quot;GO111MODULE&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;w&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;auto&quot;&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+  &lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;w&quot;&gt;
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;gopls 似乎无法识别的系统环境变量中的 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;GO111MODULE&lt;/code&gt; 变量，但是在设置中修改，是有效的。&lt;/p&gt;
+
+&lt;h4 id=&quot;二gopls-警告依赖模块不对&quot;&gt;二、gopls 警告：依赖模块不对&lt;/h4&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;The code in the workspace failed to compile (see the error message below).
+If you believe this is a mistake, please file an issue: https://github.com/golang/go/issues/new.
+unexpected directory layout:
+	import path: _/Users/me/go-project/src/github.com/compeny/compeny-api/app/models
+	root: /Users/me/go-project/src
+	dir: /Users/me/go-project/src/github.com/compeny/compeny-api/app/models
+	expand root: /Users/me/go-project
+	expand dir: /Users/me/go-project/src/github.com/compeny/compeny-api/app/models
+	separator: /
+unexpected directory layout:
+	import path: _/Users/me/go-project/src/github.com/compeny/compeny-api/app/models
+	root: /Users/me/go-project/src
+	dir: /Users/me/go-project/src/github.com/compeny/compeny-api/app/models
+	expand root: /Users/me/go-project
+	expand dir: /Users/me/go-project/src/github.com/compeny/compeny-api/app/models
+	separator: /
+: packages.Load error
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;解决方式：根据提示，删除 $GOPATH 中 pkg、src 中可能重复的代码即可&lt;/p&gt;</content><author><name>me</name></author><category term="go" /><category term="go" /><summary type="html">gopls 在 go1.5 之后的坑 - 简述</summary></entry><entry><title type="html">最近的一些git研究</title><link href="https://mozz.in/git/2020/11/13/git.html" rel="alternate" type="text/html" title="最近的一些git研究" /><published>2020-11-13T02:30:00+08:00</published><updated>2020-11-13T02:30:00+08:00</updated><id>https://mozz.in/git/2020/11/13/git</id><content type="html" xml:base="https://mozz.in/git/2020/11/13/git.html">&lt;h3 id=&quot;前话&quot;&gt;前话&lt;/h3&gt;
+
+&lt;p&gt;最近在写 git 的一个服务，也就是 growerlab 的一个组件。&lt;/p&gt;
+
+&lt;p&gt;mensa - https://github.com/growerlab/mensa&lt;/p&gt;
+
+&lt;p&gt;最近做的研究主要是用户的推送时以及推送到服务器的 hook 相关的功能。&lt;/p&gt;
+
+&lt;h3 id=&quot;推送时的权限验证时机&quot;&gt;推送时的权限验证时机&lt;/h3&gt;
+
+&lt;p&gt;整个服务流程&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;git push&lt;/li&gt;
+  &lt;li&gt;mensa - 调用 git-refs 权限权限&lt;/li&gt;
+  &lt;li&gt;mensa - 调用 git-receive-pack&lt;/li&gt;
+  &lt;li&gt;mensa - 调用 hooks 创建 events
+    &lt;ul&gt;
+      &lt;li&gt;hook 时机&lt;/li&gt;
+      &lt;li&gt;新分支的 commits&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;hook-时机的坑&quot;&gt;hook 时机的坑&lt;/h4&gt;
+
+&lt;p&gt;最开始是想在创建仓库的时候，ln -s 软链一个 update 的 hook 到对应的钩子，这个是很久之前的 gitlab 的版本的方式。&lt;/p&gt;
+
+&lt;p&gt;后来查阅 gitlab 开发的 gitaly 代码，才发现 gitlab 这些年做了很多的改造，避开了很多 n 年前的坑。&lt;/p&gt;
+
+&lt;p&gt;比如 hook 的接入时机改成了调用 git 命令时&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git xxxx -c core.hooksPath=hook path
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这样其实还是非常方便的，避免了无避免的软链&lt;/p&gt;
+
+&lt;h4 id=&quot;新分支的-commits&quot;&gt;新分支的 commits&lt;/h4&gt;
+
+&lt;p&gt;hook 的功能之一就是创建 events。&lt;/p&gt;
+
+&lt;p&gt;普通的 commits 还好说，但是如果一个新的 分支，并且里面有几个新的 commits 时，这个问题倒是花了我一点时间研究测试。&lt;/p&gt;
+
+&lt;p&gt;后来发现，调用 update hook 时，还并不会在 refs 中创建对应的分支。&lt;/p&gt;
+
+&lt;p&gt;并且通过 go-git 试验发现，新提交的分支中的新 commit，查找他的 parents 时，只能拿到新提交的 commits。&lt;/p&gt;
+
+&lt;p&gt;所以当不管用户提交新的 branch 还是新的 tag，都是可以拿到新提交的 commit 的。&lt;/p&gt;
+
+&lt;h3 id=&quot;完&quot;&gt;完&lt;/h3&gt;
+
+&lt;p&gt;在做代码托管平台时，其实很多 git 的本身的很多问题都是可以通过测试发现的，有的坑必须踩呀。&lt;/p&gt;
+
+&lt;p&gt;又记一片流水账。。&lt;/p&gt;</content><author><name>moli</name></author><category term="git" /><category term="git" /><summary type="html">前话</summary></entry><entry><title type="html">通过UCloud GlobalSSH加速github推拉速度/暴露内网替代花生壳</title><link href="https://mozz.in/github/2020/08/17/ucloud-globalssh.html" rel="alternate" type="text/html" title="通过UCloud GlobalSSH加速github推拉速度/暴露内网替代花生壳" /><published>2020-08-17T06:30:00+08:00</published><updated>2020-08-17T06:30:00+08:00</updated><id>https://mozz.in/github/2020/08/17/ucloud-globalssh</id><content type="html" xml:base="https://mozz.in/github/2020/08/17/ucloud-globalssh.html">&lt;h3 id=&quot;前话&quot;&gt;前话&lt;/h3&gt;
+
+&lt;p&gt;本来正在想重构 growerlab 的权限功能 &lt;a href=&quot;https://github.com/growerlab&quot;&gt;github.com/growerlab&lt;/a&gt;，考虑到未来权限的验证是一件非常麻烦的事，以及在其他微服务的功能通用性上，所以打算重新设计权限能力。&lt;/p&gt;
+
+&lt;p&gt;当然，功能是跟在 ONES 的同事讨论沟通的设计，非原创，改天推到仓库中。&lt;/p&gt;
+
+&lt;p&gt;ONES 是一个非常棒的项目管理系统，欢迎大佬们尝试使用。&lt;/p&gt;
+
+&lt;h3 id=&quot;ucloud-globalssh-的妙用&quot;&gt;UCloud GlobalSSH 的妙用&lt;/h3&gt;
+
+&lt;p&gt;首先感谢 ucloud 的 GlobalSSH 功能，这个太棒了！希望不要停掉这个服务（目前免费，啥时候收费也支持一波！）&lt;/p&gt;
+
+&lt;p&gt;目前我主要用来做 github 的推拉加速、暴露内网替代花生壳。&lt;/p&gt;
+
+&lt;h4 id=&quot;github-推拉加速&quot;&gt;github 推拉加速&lt;/h4&gt;
+
+&lt;p&gt;因为国内众所周知的原因，我们使用 github 推拉代码非常的卡、慢。&lt;/p&gt;
+
+&lt;p&gt;但是其实我们可以通过 TCP 级别的代理转发 SSH 流量。&lt;/p&gt;
+
+&lt;p&gt;如果自建一个 VPS 来做这个事情，其实使用、维护成本还是比较高的。&lt;/p&gt;
+
+&lt;p&gt;所以我们可以通过 UCloud 的 GlobalSSH 服务（所谓是全球 SSH 加速服务？）&lt;/p&gt;
+
+&lt;p&gt;亲测可行。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/08/github-ssh-1.png&quot; alt=&quot;截图&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2020/08/github-ssh-2.png&quot; alt=&quot;截图2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;创建一个你的 GlobalSSH 服务即可，通过 ping github.com 即可拿到服务器地址。&lt;/p&gt;
+
+&lt;p&gt;然后我们得到「加速域名」。&lt;/p&gt;
+
+&lt;p&gt;比如现在我们要加速 github 项目。&lt;/p&gt;
+
+&lt;p&gt;这个项目现在的 ssh 地址是 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git@github.com:xxx/xxx.git&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;现在我们将他改成 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git@xxxx.ipssh.net:xxx/xxx.git&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;注意加粗部分就是我们的加速服务器地址。&lt;/p&gt;
+
+&lt;p&gt;然后我们在 github 项目目录下执行：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git remote set-url origin git@xxxx.ipssh.net:xxx/xxx.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h5 id=&quot;另外一种简单方法&quot;&gt;另外一种简单方法&lt;/h5&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ vim ~/.ssh/config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;新增配置：&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt; Host github.com
+     User    git
+     Hostname 52.74.223.119.ipssh.net
+     Port    22
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这样所有的 github.com 走 ssh 时，都会走该 hostname&lt;/p&gt;
+
+&lt;p&gt;完成替换后就是使用新的加速地址了。&lt;/p&gt;
+
+&lt;h4 id=&quot;暴露内网替代花生壳&quot;&gt;暴露内网替代花生壳&lt;/h4&gt;
+
+&lt;p&gt;因为最近做飞书的机器人开发，所有需要调试机器人，OAuth2 授权、ticket 回调等，都需要暴露本地的内网，使内网程序能被公网访问。&lt;/p&gt;
+
+&lt;p&gt;相同的功能有花生壳，ngrok。&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;花生壳：域名要购买，有点麻烦&lt;/li&gt;
+  &lt;li&gt;ngrok：免费不固定域名，而且不管免费、收费速度都不快，毕竟是国外服务。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;这个功能其实是要一个 VPS 的，但是因为我的服务器在国外，直接 ssh 上经常断断续续非常苦恼。&lt;/p&gt;
+
+&lt;p&gt;目前国内这个冲浪环境，程序员应该是人手一台 VPS？&lt;/p&gt;
+
+&lt;p&gt;所以使用 GlobalSSH 来中转，效率速度提升非常！&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;在 vps 上启动 nginx&lt;/li&gt;
+  &lt;li&gt;新增一个反向代理配置，将请求全部转到 2222 端口&lt;/li&gt;
+  &lt;li&gt;如下方式启动 ssh 代理&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ ssh -vnNt -i ~/.ssh/id_rsa -R 2222:localhost:9001 root@123.123.123.123.ipssh.net
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这样 nginx 会将请求转到 2222 端口，ssh 代理会将 2222 的请求转到本地的 9001 端口。&lt;/p&gt;
+
+&lt;p&gt;在本地服务启动并监听 9001 端口，当用户访问服务器时，nginx 会将整个请求转到本地监听 9001 端口的程序。&lt;/p&gt;
+
+&lt;h4 id=&quot;完毕&quot;&gt;完毕&lt;/h4&gt;
+
+&lt;p&gt;记了一篇流水账，希望能帮到有需要的人。&lt;/p&gt;</content><author><name>moli</name></author><category term="github" /><category term="github" /><summary type="html">前话</summary></entry><entry><title type="html">程序设计的一些总结</title><link href="https://mozz.in/programmer/life/2020/04/22/programmer-sum-up.html" rel="alternate" type="text/html" title="程序设计的一些总结" /><published>2020-04-22T08:30:00+08:00</published><updated>2020-04-22T08:30:00+08:00</updated><id>https://mozz.in/programmer/life/2020/04/22/programmer-sum-up</id><content type="html" xml:base="https://mozz.in/programmer/life/2020/04/22/programmer-sum-up.html">&lt;p&gt;确实太久没写文章了，没啥理由，就是懒了。&lt;/p&gt;
+
+&lt;p&gt;没想到 2020 年过得真快，眼看进度条已经快 40%了。&lt;/p&gt;
+
+&lt;p&gt;2020 年发生了太多事，大到全球疫情，小到家庭矛盾，总体来说不太走运，但是人总要乐观一点，否则真的会不太好过。&lt;/p&gt;
+
+&lt;p&gt;偏题了，这篇文字是想写一些程序设计相关的一些感悟，观察，感慨。观察一些厉害的人，学习他人优点，补充一些自己的不足。&lt;/p&gt;
+
+&lt;h3 id=&quot;聪明人的自带天赋&quot;&gt;聪明人的自带天赋&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;如果一定要说聪明人之所以聪明，我一定会说：记忆力。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;印象中物理界、数学界大佬，现实中认识的聪明人，无一例外记忆力都挺强。对曾经发生的事，甚至一些细节末梢依然描述得非常清晰。&lt;/p&gt;
+
+&lt;p&gt;有一次问个大佬一个代码问题，看 git 记录可能已经是 2 年前的代码，主要细节依然很清楚。&lt;/p&gt;
+
+&lt;p&gt;而「推理」跟大脑中的信息量是有直接关系的。&lt;/p&gt;
+
+&lt;p&gt;so~ 有些天赋得认命~&lt;/p&gt;
+
+&lt;h4 id=&quot;提高记忆力&quot;&gt;提高记忆力&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;好记性不如烂笔头&lt;/li&gt;
+  &lt;li&gt;想更多，更深，持续改进&lt;/li&gt;
+  &lt;li&gt;睡眠、睡眠、睡眠！&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;在程序开发中，厉害的程序员会想清楚方方面面，文字、UML、脑图、架构图、流程图，越细越好，这些东西本质上是在帮助记忆。&lt;/p&gt;
+
+&lt;p&gt;当然更重要的是，提前想好，规划好你要做的事。&lt;/p&gt;
+
+&lt;p&gt;良好的睡眠则是最好的大脑养护。&lt;/p&gt;
+
+&lt;p&gt;某大佬：程序设计=睡好觉&lt;/p&gt;
+
+&lt;p&gt;大脑的保养很重要。&lt;/p&gt;
+
+&lt;h3 id=&quot;问题的抽象汇总与方案输出&quot;&gt;问题的抽象汇总与方案输出&lt;/h3&gt;
+
+&lt;p&gt;工作中，随着开发、迭代，我们总会碰到一系列的问题，这些问题可能会有一些联系，规律。&lt;/p&gt;
+
+&lt;p&gt;那么，对问题的 分类，归纳，总结，找出共同点，或本质的问题，最终输出一个合理的方案来解决问题。&lt;/p&gt;
+
+&lt;p&gt;这种能力需要经验以及丰富的知识，视野来提供支撑。&lt;/p&gt;
+
+&lt;p&gt;其实也需要一定的创造力。&lt;/p&gt;
+
+&lt;h3 id=&quot;程序设计是一门创造性的工作&quot;&gt;程序设计是一门创造性的工作&lt;/h3&gt;
+
+&lt;p&gt;上面说到程序设计中的一系列问题，工程师本质上就是一直在解决各类问题。&lt;/p&gt;
+
+&lt;p&gt;而各类解决方案的输出，本质上是一门创造性的工作，也许有一些方案已经存在了轮子，可以拿过来用，比如搜索功能 es。&lt;/p&gt;
+
+&lt;p&gt;但是某些没有的功能，是创造性的，需要权衡各种利弊的，甚至需要一些文献来提供支撑的，至少在逻辑上合情合理的。&lt;/p&gt;
+
+&lt;p&gt;普通程序员与高阶程序员一定程度上就是这种差异，这种差异往往是很难追赶的。&lt;/p&gt;
+
+&lt;p&gt;普通程序员如果想往上爬，做更厉害的程序员，需要思考更多。&lt;/p&gt;
+
+&lt;p&gt;与厉害的程序员交流是非常好的方式，当然你得提前将你的问题整理成问题，你的解决方案，你的思路，要解决的问题，这样更大佬交流才能更高效。&lt;/p&gt;</content><author><name>moli</name></author><category term="programmer" /><category term="life" /><category term="golang" /><category term="programmer" /><summary type="html">确实太久没写文章了，没啥理由，就是懒了。</summary></entry><entry><title type="html">数据库中的重型字段迁移优化（golang）</title><link href="https://mozz.in/go/%E6%95%B0%E6%8D%AE%E5%BA%93/2019/12/17/database-migrate-optimization.html" rel="alternate" type="text/html" title="数据库中的重型字段迁移优化（golang）" /><published>2019-12-17T03:30:00+08:00</published><updated>2019-12-17T03:30:00+08:00</updated><id>https://mozz.in/go/%E6%95%B0%E6%8D%AE%E5%BA%93/2019/12/17/database-migrate-optimization</id><content type="html" xml:base="https://mozz.in/go/%E6%95%B0%E6%8D%AE%E5%BA%93/2019/12/17/database-migrate-optimization.html">&lt;p&gt;最近在数据迁移中的一些优化点，在这里分享一些，当然也不一定是最优的，欢迎讨论。&lt;/p&gt;
+
+&lt;p&gt;首先，在某些数据表中的字段，存着非常大的json数据。&lt;/p&gt;
+
+&lt;p&gt;并且有几十万行数据，需要更改json中的某个数组字段，追加一些元素。&lt;/p&gt;
+
+&lt;h4 id=&quot;常规方式&quot;&gt;常规方式&lt;/h4&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;读取所有的行&lt;/li&gt;
+  &lt;li&gt;json反序列化&lt;/li&gt;
+  &lt;li&gt;修改数据&lt;/li&gt;
+  &lt;li&gt;json序列号并保持到数据库&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;有几个问题&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;内存占用非常大，每行大概至少有8KB的数据，各种对象，内存申请，这个迁移程序可能会吃到数G的内存。&lt;/li&gt;
+  &lt;li&gt;性能也不好，在读取数据库期间，其实是浪费了的&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;第二次优化&quot;&gt;第二次优化&lt;/h4&gt;
+
+&lt;p&gt;按每个团队划分，分别查询，内存降低了一点，因为golang中，使用过的对象并不会立即GC掉。&lt;/p&gt;
+
+&lt;p&gt;由于频繁的make对象，所以内存不会立即gc，内存还是比较高的。&lt;/p&gt;
+
+&lt;h4 id=&quot;第三次优化&quot;&gt;第三次优化&lt;/h4&gt;
+
+&lt;p&gt;使用golang中的Pool功能来复用对象：&lt;/p&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;issueTypePool&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sync&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;New&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;interface&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;make&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IssueType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;数据库查询&lt;/p&gt;
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;issueTypes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;issueTypePool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IssueType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Select&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;issueTypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;teamUUID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;恢复对象到对象池：&lt;/p&gt;
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;defer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;issueTypePool&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Put&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;issueTypes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这样已经不错了，对象能复用，内存占用取决于最大的团队的内存占用。。&lt;/p&gt;
+
+&lt;h4 id=&quot;第四次优化&quot;&gt;第四次优化&lt;/h4&gt;
+
+&lt;p&gt;使用golang中的游标方式。&lt;/p&gt;
+
+&lt;p&gt;下面的代码中有第二个参数就是channel缓冲区，并且在rows中边读边丢入channel&lt;/p&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AllObjects&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tx&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;issueTypeChan&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;chan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IssueType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;// 。。。。&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;new&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IssueType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Scan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;UUID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TeamUUID&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DefaultConfigs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;err&lt;/span&gt;
+		&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;issueTypeChan&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt;
+	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;启动goroutine，并在持续从chan缓冲区读取数据，同时对数据修改迁移，并写入数据库。&lt;/p&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;issueTypeChan&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;make&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;chan&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IssueType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;doneChan&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;make&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;chan&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewTimer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;defer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Stop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;go&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;nb&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;doneChan&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;done...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;it&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;issueTypeChan&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;timer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Reset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;m&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Second&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;// TODO ....&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这样就比较满意了，但是这种方式还没有经过测试，理论上读写分离之后，性能是更优的。&lt;/p&gt;</content><author><name>moli</name></author><category term="go" /><category term="数据库" /><category term="golang" /><category term="upgrate" /><category term="database" /><summary type="html">最近在数据迁移中的一些优化点，在这里分享一些，当然也不一定是最优的，欢迎讨论。</summary></entry><entry><title type="html">升级go1.12版本遇到的问题</title><link href="https://mozz.in/go/2019/08/16/go1.12-upgrade-problem.html" rel="alternate" type="text/html" title="升级go1.12版本遇到的问题" /><published>2019-08-16T23:30:00+08:00</published><updated>2019-08-16T23:30:00+08:00</updated><id>https://mozz.in/go/2019/08/16/go1.12-upgrade-problem</id><content type="html" xml:base="https://mozz.in/go/2019/08/16/go1.12-upgrade-problem.html">&lt;p&gt;升级到 go1.12 碰到一个依赖版本问题&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;xxxxxxx/vendor/go4.org/reflectutil.typedmemmove: relocation target runtime.typedmemmove not defined for ABI0 (but is defined for ABIInternal)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;解决方案：&lt;/p&gt;
+
+&lt;p&gt;删除 vendor 目录中的 go4.org 目录&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;执行：govendor update go4.org/reflectutil
+
+总之就是更新这个包到新版
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;即可&lt;/p&gt;
+
+&lt;p&gt;=========&lt;/p&gt;
+
+&lt;p&gt;奶一波我的一个网站：&lt;a href=&quot;https://v2geek.com&quot;&gt;https://v2geek.com&lt;/a&gt; ，欢迎大家来贩卖自己的软件。&lt;/p&gt;</content><author><name>moli</name></author><category term="go" /><category term="golang" /><category term="upgrate" /><summary type="html">升级到 go1.12 碰到一个依赖版本问题</summary></entry><entry><title type="html">换个新博客皮肤</title><link href="https://mozz.in/%E5%8D%9A%E5%AE%A2/2019/08/07/new-style.html" rel="alternate" type="text/html" title="换个新博客皮肤" /><published>2019-08-07T08:30:00+08:00</published><updated>2019-08-07T08:30:00+08:00</updated><id>https://mozz.in/%E5%8D%9A%E5%AE%A2/2019/08/07/new-style</id><content type="html" xml:base="https://mozz.in/%E5%8D%9A%E5%AE%A2/2019/08/07/new-style.html">&lt;p&gt;呼呼，晚上加班上线比较无聊，所以换个博客皮肤，感觉清爽一些~&lt;/p&gt;
+
+&lt;p&gt;瞧了下十多年前写的博客，感觉好傻逼。。。🙄&lt;/p&gt;
+
+&lt;p&gt;感慨时光飞逝~~ 竟已是孩子他爹~~~~&lt;/p&gt;
+
+&lt;p&gt;=========&lt;/p&gt;
+
+&lt;p&gt;奶一波我的一个网站：&lt;a href=&quot;https://v2geek.com&quot;&gt;https://v2geek.com&lt;/a&gt; ，欢迎大家来贩卖自己的软件。&lt;/p&gt;</content><author><name>moli</name></author><category term="博客" /><summary type="html">呼呼，晚上加班上线比较无聊，所以换个博客皮肤，感觉清爽一些~</summary></entry><entry><title type="html">学习Rust</title><link href="https://mozz.in/rust/2019/08/04/study-rust.html" rel="alternate" type="text/html" title="学习Rust" /><published>2019-08-04T06:10:00+08:00</published><updated>2019-08-04T06:10:00+08:00</updated><id>https://mozz.in/rust/2019/08/04/study-rust</id><content type="html" xml:base="https://mozz.in/rust/2019/08/04/study-rust.html">&lt;p&gt;最近想学 rust 主要是好奇心。。&lt;/p&gt;
+
+&lt;p&gt;其实 2016 年就接触过，但是当时学得有点难受，于是放弃了，也没有目标性。&lt;/p&gt;
+
+&lt;p&gt;于是现在又学一下 rust~ 感觉还是有必要掌握一门高性能的语言，虽然 c/cpp 也可以，但是毕竟还是有点古老了。&lt;/p&gt;
+
+&lt;p&gt;而且比较看好 rust，哈哈。&lt;/p&gt;
+
+&lt;p&gt;而且最近想整一个小项目，需要一点高性能的东西，虽然理论上 golang 完全够用了，但是就当学一个新东西，顺便用起来，也挺好的。&lt;/p&gt;
+
+&lt;p&gt;完毕。。。&lt;/p&gt;
+
+&lt;p&gt;=========== 8 月 7 号更新&lt;/p&gt;
+
+&lt;p&gt;rust 学习确实比较陡，估计学 1 个月才能上手~~~ 所以投入产出比太低了~~~ 先弃坑了~~~&lt;/p&gt;
+
+&lt;p&gt;奶一波我的一个网站：&lt;a href=&quot;https://v2geek.com&quot;&gt;https://v2geek.com&lt;/a&gt; ，欢迎大家来贩卖自己的软件。&lt;/p&gt;</content><author><name>moli</name></author><category term="rust" /><category term="rust" /><category term="study" /><summary type="html">最近想学 rust 主要是好奇心。。</summary></entry><entry><title type="html">golang写一个配置同步工具</title><link href="https://mozz.in/golang/2019/07/08/golang-synconfig.html" rel="alternate" type="text/html" title="golang写一个配置同步工具" /><published>2019-07-08T06:56:00+08:00</published><updated>2019-07-08T06:56:00+08:00</updated><id>https://mozz.in/golang/2019/07/08/golang-synconfig</id><content type="html" xml:base="https://mozz.in/golang/2019/07/08/golang-synconfig.html">&lt;p&gt;开源地址：&lt;a href=&quot;https://github.com/molizz/synconfig&quot;&gt;https://github.com/molizz/synconfig&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;synconfig-是什么&quot;&gt;Synconfig 是什么&lt;/h3&gt;
+
+&lt;p&gt;这个工具是基于 boltDB 开发的基于 http 协议的 配置同步工具。&lt;/p&gt;
+
+&lt;p&gt;这个的初衷是之前写一个你懂得工具，然后在分布在各地服务器，如果每次增加个新的服务器，那么就要重新同步配置，总之非常容易出错，是一个非常不可靠的设计。&lt;/p&gt;
+
+&lt;p&gt;于是就想整一个“配置中心”的功能，最开始想用 etcd，但是好像有点复杂了，所以感觉自己写了一个 服务端和客户端。&lt;/p&gt;
+
+&lt;p&gt;第三方的软件，直接集成客户端的功能，就实现配置的同步了。&lt;/p&gt;
+
+&lt;p&gt;实现 配置 与 服务的解耦。&lt;/p&gt;
+
+&lt;p&gt;当有新的配置更新时，所有的客户端能自动收到新的配置，自动更新自身。&lt;/p&gt;
+
+&lt;p&gt;造这个轮子不仅仅是为了“你懂得”的软件，未来我的任何新的一些服务，都可以直接集成客户端，并且快速上线&lt;/p&gt;
+
+&lt;h3 id=&quot;基本实现&quot;&gt;基本实现&lt;/h3&gt;
+
+&lt;p&gt;“配置中心” 服务端需要运行在某个服务器的。我是在 vultr 上购买了一个最低配的服务器，每个月 3.5 刀，还可以，上面还跑了一些其他的服务。&lt;/p&gt;
+
+&lt;p&gt;“客户端” 配置好服务器端后，就会隔几秒通过自己的 stamp 来获取新的配置，从而更新自身的配置。&lt;/p&gt;
+
+&lt;p&gt;通讯上使用 token 来校验，并且可以配置 https 来通讯，避免 token 外泄，也建议使用 https 来与服务端通讯，避免 token 被检测到。&lt;/p&gt;
+
+&lt;h3 id=&quot;其他&quot;&gt;其他&lt;/h3&gt;
+
+&lt;p&gt;通过写这么一个简单的“基础设施”，还是挺好玩的。&lt;/p&gt;
+
+&lt;p&gt;我设想的一些很多功能，都会集成这个服务端。&lt;/p&gt;
+
+&lt;p&gt;奶一波我的一个网站：&lt;a href=&quot;https://v2geek.com&quot;&gt;https://v2geek.com&lt;/a&gt; ，欢迎大家来贩卖自己的软件。&lt;/p&gt;</content><author><name>moli</name></author><category term="golang" /><category term="golang" /><category term="synconfig" /><summary type="html">开源地址：https://github.com/molizz/synconfig</summary></entry><entry><title type="html">Golang函数级别的监控</title><link href="https://mozz.in/golang/2019/01/28/golang-function-profile.html" rel="alternate" type="text/html" title="Golang函数级别的监控" /><published>2019-01-28T08:56:00+08:00</published><updated>2019-01-28T08:56:00+08:00</updated><id>https://mozz.in/golang/2019/01/28/golang-function-profile</id><content type="html" xml:base="https://mozz.in/golang/2019/01/28/golang-function-profile.html">&lt;blockquote&gt;
+  &lt;p&gt;golang函数级别的监控主要使用pprof包中的&lt;a href=&quot;https://golang.org/src/runtime/pprof/pprof.go?s=23119:23158#L730&quot;&gt;StartCPUProfile&lt;/a&gt; 函数与 &lt;a href=&quot;https://golang.org/src/runtime/pprof/pprof.go?s=25047:25068#L789&quot;&gt;StopCPUProfile&lt;/a&gt;&lt;/p&gt;
+
+  &lt;p&gt;本报告主要是围绕这个监控来.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;监控函数性能的目的&quot;&gt;监控函数性能的目的&lt;/h2&gt;
+
+&lt;p&gt;除了sql慢查询监控, 网络情况等监控, 我们应该也必须监控到函数的性能. 如果因为不合理的代码导致接口变慢, 内存变多等问题, 应能被监控并处理的.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;提高接口响应速度&lt;/li&gt;
+  &lt;li&gt;提前预知问题, 并尽早处理, 而不是等到大范围的客户感知被动响应(减少被动率, 提高主动率)&lt;/li&gt;
+  &lt;li&gt;让程序员写出更好的代码&lt;/li&gt;
+  &lt;li&gt;最终的目标是在性能问题被客户感知,放大之前, 将性能问题解决掉&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;pprof简单介绍&quot;&gt;PProf简单介绍&lt;/h3&gt;
+
+&lt;p&gt;进程中的性能问题主要采用StartCPUProfile &amp;amp; StopCPUProfile函数.&lt;/p&gt;
+
+&lt;p&gt;这两个函数是golang自带的性能采集函数, 用于帮助开发者检查并分析进程中的性能问题.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;StartCPUProfile 开始采集运行栈, 并保存起来&lt;/li&gt;
+  &lt;li&gt;StopCPUProfile 停止采集&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;生产环境中使用pprof会有什么问题&quot;&gt;生产环境中使用PProf会有什么问题&lt;/h3&gt;
+
+&lt;p&gt;那么直接在生产环境中会对主进程造成什么影响呢?&lt;/p&gt;
+
+&lt;p&gt;golang中的底层readProfile函数:&lt;/p&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c&quot;&gt;// readProfile, provided by the runtime, returns the next chunk of&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;// binary CPU profiling stack trace data, blocking until data is available.&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;// If profiling is turned off and all the profile data accumulated while it was&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;// on has been returned, readProfile returns eof=true.&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;// The caller must save the returned data and tags before calling readProfile again.&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;readProfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;uint64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tags&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unsafe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Pointer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;eof&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;目测不会对主城造成负担.&lt;/p&gt;
+
+&lt;h2 id=&quot;解决方案&quot;&gt;解决方案&lt;/h2&gt;
+
+&lt;h3 id=&quot;分析prof数据&quot;&gt;分析prof数据&lt;/h3&gt;
+
+&lt;p&gt;刚开始接触使用StartCPUProfile的时候, 感觉是一个本地使用的工具, 并不觉得可以用在生产环境(没看源码)&lt;/p&gt;
+
+&lt;p&gt;但是参考 &lt;a href=&quot;http://github.com/stackimpact/stackimpact-go&quot;&gt;http://github.com/stackimpact/stackimpact-go&lt;/a&gt; 的源码后, 发现其实StartCPUProfile是可以被集成到生产环境的性能监控的.&lt;/p&gt;
+
+&lt;p&gt;疑惑&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;如何解码StartCPUProfile产生的pprof数据&lt;/li&gt;
+  &lt;li&gt;如何统计&amp;amp;量化profile数据 &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;顺着这个思路, 开始研究golang中的go tool pprof 相关的命令源码, 并查阅 stackimpact 源码.&lt;/p&gt;
+
+&lt;p&gt;go tool pprof 的命令是基于 &lt;a href=&quot;https://github.com/google/pprof/&quot;&gt;https://github.com/google/pprof/&lt;/a&gt; 实现的.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;数据通过 &lt;a href=&quot;https://developers.google.com/protocol-buffers&quot;&gt;protocol-buffers&lt;/a&gt; 协议存储&lt;/li&gt;
+  &lt;li&gt;profile的数据结构: &lt;a href=&quot;https://github.com/google/pprof/blob/master/proto/profile.proto&quot;&gt;https://github.com/google/pprof/blob/master/proto/profile.proto&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;解码功能可以在 google/pprof 库里面找到.
+    &lt;ul&gt;
+      &lt;li&gt;google/pprof/profile.Parse()&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;查阅完上面的文档后可知道:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;StartCPUProfile输出的结果是用的google/pprof保存 + GZip方式压缩过的&lt;/li&gt;
+  &lt;li&gt;输出的结果(xxx.prof) 文件是可以通过gzip.Reader 解码后, 通过google/pprof中的序列化成一个结构体的&lt;/li&gt;
+  &lt;li&gt;结构体中内容如下:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Profile&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;SampleType&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ValueType&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;Sample&lt;/span&gt;     &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Sample&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;Mapping&lt;/span&gt;    &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Mapping&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;Location&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Location&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;Function&lt;/span&gt;   &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Function&lt;/span&gt;
+
+    	&lt;span class=&quot;n&quot;&gt;DropFrames&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;KeepFrames&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;
+
+    	&lt;span class=&quot;n&quot;&gt;TimeNanos&lt;/span&gt;     &lt;span class=&quot;kt&quot;&gt;int64&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;DurationNanos&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int64&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;PeriodType&lt;/span&gt;    &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ValueType&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;Period&lt;/span&gt;        &lt;span class=&quot;kt&quot;&gt;int64&lt;/span&gt;
+
+    	&lt;span class=&quot;n&quot;&gt;dropFramesX&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int64&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;keepFramesX&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int64&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;stringTable&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;解码pprof数据&quot;&gt;解码PProf数据:&lt;/h4&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c&quot;&gt;// 将监控的结果写入内存&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;buff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bufio&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NewWriter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pprof&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StartCPUProfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;defer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pprof&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StopCPUProfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;// 解码数据(伪代码)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;google&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pprof&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;profile&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;encodeBuff&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gzip&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Reader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;profile&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Parse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encodeBuff&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;通过上面的伪代码可以了解到这个搜集pprof的结果.&lt;/p&gt;
+
+&lt;h4 id=&quot;结论-暂时只考虑-定时监控-的方式&quot;&gt;结论: 暂时只考虑 “定时监控” 的方式&lt;/h4&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StartCPUProfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Writer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;error&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;// cpu锁&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Lock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    	&lt;span class=&quot;k&quot;&gt;defer&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Unlock&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;done&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    		&lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;done&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;make&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;chan&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;bool&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    	&lt;span class=&quot;c&quot;&gt;// 双重锁&lt;/span&gt;
+    	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;profiling&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    		&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fmt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Errorf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;cpu profiling already in use&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    	&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;cpu&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;profiling&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;true&lt;/span&gt;
+            &lt;span class=&quot;c&quot;&gt;// ...&lt;/span&gt;
+    	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;no&quot;&gt;nil&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;定时监控-实现&quot;&gt;“定时监控” 实现&lt;/h3&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c&quot;&gt;// ...&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TickerProfiler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tickerFunc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    	&lt;span class=&quot;c&quot;&gt;// ...&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;// 保持到队列&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ProfilesData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AddNewProfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newProfile&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    	&lt;span class=&quot;c&quot;&gt;// ...&lt;/span&gt;
+    	&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;list&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Push&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;profile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;// 通过接口+时间戳获取队列中的增量数据&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GetProfiles&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stamp&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Profile&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    	&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;profiles&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;通过每隔一段时间执行 StartCPUProfile 进行采集并保持到队列列表中&lt;/p&gt;
+
+&lt;p&gt;定时监控”优点:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;对主进程影响较低&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;缺点:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;颗粒度较大, 不一定能实时命中到到较慢的函数(但理论上可以命大所有的函数)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;中间件-实现&quot;&gt;“中间件” 实现&lt;/h3&gt;
+
+&lt;p&gt;通过router.go中加入begin/done的方式监控各个接口请求的性能&lt;/p&gt;
+
+&lt;div class=&quot;language-golang highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    &lt;span class=&quot;c&quot;&gt;// 伪代码&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StartCPUProfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;// 接口&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Done&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StopCPUProfile&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;优点:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;颗粒度够细&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;缺点&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;StartCPUProfile 本身是全局锁, 同时只能运行一个该函数&lt;/li&gt;
+  &lt;li&gt;在并发条件下, 依然可能会导致其他接口无法被监控到.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;如何量化监控到的数据&quot;&gt;如何量化监控到的数据&lt;/h3&gt;
+
+&lt;p&gt;采集到数据后, 可通过grafana将数据展示出来, 并提供预警等&lt;/p&gt;
+
+&lt;h3 id=&quot;开源库&quot;&gt;开源库&lt;/h3&gt;
+
+&lt;p&gt;根据这篇文章写一个golang的监控库:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/molizz/funcpprof&quot;&gt;https://github.com/molizz/funcpprof&lt;/a&gt;&lt;/p&gt;</content><author><name>moli</name></author><category term="golang" /><category term="golang" /><summary type="html">golang函数级别的监控主要使用pprof包中的StartCPUProfile 函数与 StopCPUProfile 本报告主要是围绕这个监控来.</summary></entry></feed>
