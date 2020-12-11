@@ -68,7 +68,7 @@ $ vim ~/.ssh/config
 ```
  Host github.com
      User    git
-     Hostname 52.74.223.119.ipssh.net
+     Hostname 52.xxx.xxx.xxx.ipssh.net
      Port    22
 ```
 
