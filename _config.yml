@@ -18,7 +18,7 @@ name: 莫粒
 email: molisoft@qq.com
 description: > # this means to ignore newlines until "baseurl:"
   时间洗刷着每一个人，希望大家安好
-baseurl: "/molizz" # the subpath of your site, e.g. /blog
+baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://mozz.in" # the base hostname & protocol for your site, e.g. http://example.com
 
 avatar: https://avatars1.githubusercontent.com/u/3153675
