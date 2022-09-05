@@ -5,7 +5,7 @@ published: true
 comments: true
 date: 2022-09-05 17:30:00
 tags:
-  - xbox cloud gaming
+  - xbox
 categories:
   - xbox
 ---
