@@ -1,16 +1,16 @@
 ---
-title: XBox Cloud Gaming 游戏加速尝试
+title: Xbox Cloud Gaming 游戏加速尝试
 author: moli
 published: true
 comments: true
-date: 2022-09-05 17:30:00
+date: 2022-09-05 17:30:01
 tags:
   - xbox
 categories:
   - xbox
 ---
 
-# Xbox Cloud Gaming 游戏加速
+## Xbox Cloud Gaming 游戏加速
 
 之前有个很老的xbox游戏机，因为性能有点差劲了，所以卖了。
 偶尔还是想玩玩游戏，但是老婆不让给买xbox的物理机（怀恋单身），所以含泪玩xbox cloud gaming（以下简称 xcg），xpg会员游戏还是很丰富的。
