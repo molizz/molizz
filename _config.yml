@@ -29,6 +29,7 @@ footer-links:
   rss: /feed.xml
   twitter: moli520
 
+
 navigation:
   - name: 首页
     url: /
@@ -70,6 +71,8 @@ gems:
 exclude:
   - Gemfile
   - Gemfile.lock
+  - tmp/
+  - vendor/
 
 layouts_dir: "_layouts"
 
