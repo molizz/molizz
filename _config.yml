@@ -31,6 +31,9 @@ footer-links:
   rss: /feed.xml
   twitter: moli520
 
+feed:
+  tags: true
+  posts_limit: 999999
 
 navigation:
   - name: 首页
